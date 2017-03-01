@@ -5,26 +5,25 @@
  */
 package com.tribc.test;
 
-import com.tribc.ddd.domain.event.DomainEventHandler;
+import com.tribc.ddd.domain.event.EventHandler;
 
 /**
  *
  * @author ajuffer
  */
 public class CustomerUpdatedHandler 
-    implements DomainEventHandler<CustomerUpdated>
+    extends EventHandler<CustomerUpdated>
 {
-
     public CustomerUpdatedHandler()
     {        
     }
     
     @Override
-    public void handle(CustomerUpdated domainEvent) 
+    public void handle(CustomerUpdated event) 
     {
-        Customer customer = domainEvent.getCustomer();
-        if ( !domainEvent.isHandled() ) {
-            System.out.print("Customer #" + customer.getCustomerId() + " updated.");
+        Long customerId = event.getCustomerId();
+        if ( !event.isHandled() ) {
+            System.out.println("Customer #" + customerId + " updated.");
         }
     }
     

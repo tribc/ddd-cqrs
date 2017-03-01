@@ -10,20 +10,20 @@ package com.tribc.ddd.domain.event;
 import java.util.Collection;
 
 /**
- * Signifies that an implementing entity may raise domain events.
+ * Marks that some entity may raise events.
  * @author Andr&#233; Juffer, Triacle Biocomputing
  */
 public interface Eventful 
 {
     /**
-     * Returns all raised domain events.
+     * Returns all raised events.
      * @return Domain events. May be empty. Never null.
      */
-    Collection<DomainEvent> getDomainEvents();
+    Collection<Event> getEvents();
     
     /**
-     * Clear entity from all domain events. Typically called after all domain
+     * Clear entity from all events. Typically called after all 
      * events have been handled.
      */
-    void clearDomainEvents();
+    void clearEvents();
 }

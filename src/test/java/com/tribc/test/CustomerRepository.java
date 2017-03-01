@@ -14,4 +14,6 @@ public interface CustomerRepository
     Customer forCustomerId(Long customerId);
     
     void add(Customer customer);
+    
+    void update(Customer customer);
 }

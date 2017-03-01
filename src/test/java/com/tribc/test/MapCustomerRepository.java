@@ -33,5 +33,11 @@ public class MapCustomerRepository
     {
         customers_.put(customer.getCustomerId(), customer);
     }
+
+    @Override
+    public void update(Customer customer) 
+    {
+        customers_.put(customer.getCustomerId(), customer);
+    }
     
 }

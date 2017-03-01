@@ -4,28 +4,27 @@
  * Biocomputing.  Any use, reproduction, or disclosure without the written
  * permission of Triacle Biocomputing is prohibited.
  */
-
 package com.tribc.test;
 
-import com.tribc.ddd.domain.event.AbstractEvent;
+import com.tribc.ddd.domain.event.EventHandler;
 
 /**
  *
  * @author Andr&#233; Juffer, Triacle Biocomputing
  */
-public class CustomerUpdated 
-    extends AbstractEvent
+public class SomethingOccuredHandler 
+    extends EventHandler<SomethingOccurred>
 {
-    private final Long customerId_;
-        
-    public CustomerUpdated(Long customerId)
-    {
-        super(CustomerUpdated.class.getName());
-        customerId_ = customerId;
+    public SomethingOccuredHandler()
+    {        
     }
     
-    public Long getCustomerId()
+    @Override
+    public void handle(SomethingOccurred event) 
     {
-        return customerId_;
+        if ( !event.isHandled() ) {
+            System.out.println("Something occured with customer #" + event.getCustomerId());
+        }
     }
+    
 }

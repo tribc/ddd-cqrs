@@ -7,19 +7,29 @@
 
 package com.tribc.ddd.domain.event;
 
-import com.tribc.ddd.domain.handling.Handler;
+import com.tribc.ddd.domain.handling.AbstractHandle;
+import java.time.Instant;
 
 /**
- * Handles events raised by the domain.
+ *
  * @author Andr&#233; Juffer, Triacle Biocomputing
- * @param <E> Domain event type.
  */
-public interface DomainEventHandler<E extends DomainEvent> extends Handler<E>
+public class AbstractEvent 
+    extends AbstractHandle
+    implements Event
 {
-    /**
-     * Handles a domain event.
-     * @param domainEvent Domain event.
-     */
+    private final Instant time_;
+    
+    protected AbstractEvent(String handleId)
+    {
+        super(handleId);
+        time_ = Instant.now();
+    }
+
     @Override
-    void handle(E domainEvent);
+    public Instant occuredOn() 
+    {
+        return time_;
+    }
+    
 }

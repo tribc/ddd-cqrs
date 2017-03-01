@@ -8,11 +8,11 @@
 package com.tribc.ddd.domain.handling;
 
 /**
- * Handles something of type T.
+ * Operates a handle.
  * @author Andr&#233; Juffer, Triacle Biocomputing
  * @param <T> Handled type. An instance of T is handled by this handler.
  */
-public interface Handler<T extends Handled>
+public interface Handler<T extends Handle>
 {
     /**
      * Handles t

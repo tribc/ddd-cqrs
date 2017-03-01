@@ -5,10 +5,10 @@
  */
 package com.tribc.test;
 
-import com.tribc.ddd.domain.event.DomainEvent;
 import com.tribc.ddd.domain.event.Eventful;
 import java.util.Collection;
 import java.util.HashSet;
+import com.tribc.ddd.domain.event.Event;
 
 /**
  *
@@ -19,13 +19,13 @@ public class Customer
 {
     private final Long customerId_;
     private String name_;
-    private final Collection<DomainEvent> domainEvents_;
+    private final Collection<Event> events_;
     
     public Customer(Long customerId, String name)
     {
         customerId_ = customerId;
         name_ = name;
-        domainEvents_ = new HashSet<>();
+        events_ = new HashSet<>();
     }
     
     public Long getCustomerId()
@@ -36,19 +36,19 @@ public class Customer
     public void setName(String name)
     {
         name_ = name;
-        domainEvents_.add(new CustomerUpdated(this));
-        
+        events_.add(new CustomerUpdated(customerId_));
+        events_.add(new SomethingOccurred(customerId_));
     }
 
     @Override
-    public Collection<DomainEvent> getDomainEvents() 
+    public Collection<Event> getEvents() 
     {
-        return domainEvents_;
+        return events_;
     }
 
     @Override
-    public void clearDomainEvents() 
+    public void clearEvents() 
     {
-        domainEvents_.clear();
+        events_.clear();
     }
 }

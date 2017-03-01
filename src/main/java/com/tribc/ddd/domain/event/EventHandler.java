@@ -7,18 +7,19 @@
 
 package com.tribc.ddd.domain.event;
 
-import com.tribc.ddd.domain.handling.Handled;
-import java.util.Date;
+import com.tribc.ddd.domain.handling.AbstractHandler;
+import com.tribc.ddd.domain.handling.Handle;
 
 /**
- * Event raised by the domain.
+ * Handles events.
  * @author Andr&#233; Juffer, Triacle Biocomputing
+ * @param <E> Event of type E.
  */
-public interface DomainEvent extends Handled
-{  
-    /**
-     * Returns date or time this event was raised.
-     * @return Date.
-     */
-    Date occuredOn();
+public abstract class EventHandler<E extends Handle> 
+    extends AbstractHandler<E>
+{
+    protected EventHandler()
+    {
+        super();
+    }
 }

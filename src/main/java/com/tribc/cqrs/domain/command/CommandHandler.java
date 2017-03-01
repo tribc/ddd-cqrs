@@ -7,20 +7,20 @@
 
 package com.tribc.cqrs.domain.command;
 
-import com.tribc.ddd.domain.handling.Handler;
+import com.tribc.ddd.domain.handling.AbstractHandler;
+import com.tribc.ddd.domain.handling.Handle;
 
 /**
- * Handles commands send to the domain.
+ * Executes a command issued by client application.
  * @author Andr&#233; Juffer, Triacle Biocomputing
- * @param <C> Command type.
+ * @param <T> Command type.
  */
-public interface CommandHandler <C extends Command> extends Handler<C>
+public abstract class CommandHandler<T extends Handle> 
+    extends AbstractHandler<T>
 {
-    /**
-     * Handles the command.
-     * @param command Command.
-     * @return Result. The result type R may be Void (e.g. for asynchronous handling).
-     */
-    @Override
-    void handle(C command);
+    protected CommandHandler()
+    {
+        super();
+    }
+
 }

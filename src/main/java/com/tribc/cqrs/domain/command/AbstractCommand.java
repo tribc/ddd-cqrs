@@ -7,32 +7,29 @@
 
 package com.tribc.cqrs.domain.command;
 
+import com.tribc.ddd.domain.handling.AbstractHandle;
+import java.time.Instant;
+
 /**
  *
  * @author Andr&#233; Juffer, Triacle Biocomputing
  */
 public class AbstractCommand
+    extends AbstractHandle
     implements Command
 {
-    private boolean handled_;
+    private final Instant time_;
     
-    protected AbstractCommand()
+    protected AbstractCommand(String handleId)
     {
-        handled_ = false;
+        super(handleId);
+        time_ = Instant.now();
     }
-
+    
     @Override
-    public boolean isHandled() 
+    public Instant issuedOn()
     {
-        return handled_;
+        return time_;
     }
     
-    /**
-     * Signals that this command was handled.
-     */
-    public void handled()
-    {
-        handled_ = true;
-    }
-
 }

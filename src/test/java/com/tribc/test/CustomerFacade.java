@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package com.tribc.test;
 
-import com.tribc.cqrs.domain.command.CommandHandler;
-import com.tribc.cqrs.domain.command.CommandHandlerProvider;
+import com.tribc.cqrs.domain.command.CommandBus;
 
 /**
  *
@@ -14,18 +14,16 @@ import com.tribc.cqrs.domain.command.CommandHandlerProvider;
  */
 public class CustomerFacade 
 {
-    CommandHandlerProvider commandHandlerProvider_;
+    private final CommandBus commandBus_;
     
-    public CustomerFacade (CommandHandlerProvider provider)
+    public CustomerFacade (CommandBus commandBus)
     {
-        commandHandlerProvider_ = provider;
+        commandBus_ = commandBus;
     }
     
     public void update(Long customerId, String name)
     {
         UpdateCustomer command = new UpdateCustomer(customerId, name);
-        CommandHandler<UpdateCustomer> handler = 
-            commandHandlerProvider_.getHandler(command);
-        handler.handle(command);        
+        commandBus_.handle(command);
     }
 }

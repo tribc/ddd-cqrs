@@ -6,19 +6,25 @@
 package com.tribc.test;
 
 import com.tribc.cqrs.domain.command.CommandHandler;
+import com.tribc.ddd.domain.event.Event;
+import com.tribc.ddd.domain.event.EventBus;
+import java.util.Collection;
 
 /**
  *
  * @author ajuffer
  */
 public class UpdateCustomerHandler
-    implements CommandHandler<UpdateCustomer>
+    extends CommandHandler<UpdateCustomer>
 {
     private final CustomerRepository customerRepository_;
+    private final EventBus eventBus_;
     
-    public UpdateCustomerHandler(CustomerRepository customerRepository)
+    public UpdateCustomerHandler(CustomerRepository customerRepository,
+                                 EventBus eventBus)
     {        
         customerRepository_ = customerRepository;
+        eventBus_ = eventBus;
     }
     
     @Override
@@ -27,7 +33,12 @@ public class UpdateCustomerHandler
         Customer customer = customerRepository_.forCustomerId(command.getCustomerid());
         if ( !command.isHandled() ) {
             customer.setName(command.getName());
+            customerRepository_.update(customer);
             command.handled();
+            
+            Collection<Event> events = customer.getEvents();
+            eventBus_.handle(events);
+            customer.clearEvents();
         }    
     }
     

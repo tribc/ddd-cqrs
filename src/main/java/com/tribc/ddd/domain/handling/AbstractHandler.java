@@ -4,18 +4,17 @@
  * Biocomputing.  Any use, reproduction, or disclosure without the written
  * permission of Triacle Biocomputing is prohibited.
  */
-
 package com.tribc.ddd.domain.handling;
 
 /**
- * Marks something that should be handled by some handler.
+ *
  * @author Andr&#233; Juffer, Triacle Biocomputing
+ * @param <T> Handle type.
  */
-public interface Handled 
+public abstract class AbstractHandler<T extends Handle>
+    implements Handler<T>
 {
-    /**
-     * Was already handled by a handler?
-     * @return Result.
-     */
-    boolean isHandled();
+    protected AbstractHandler()
+    {
+    }
 }

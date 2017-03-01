@@ -5,22 +5,21 @@
  * permission of Triacle Biocomputing is prohibited.
  */
 
-package com.tribc.ddd.domain.handling;
+package com.tribc.ddd.domain.event;
 
-import com.tribc.ddd.domain.event.DomainEvent;
-import com.tribc.ddd.domain.event.Eventful;
+import com.tribc.ddd.domain.handling.MapBus;
 import java.util.Collection;
 
 /**
- *
+ * Handles events raised.
  * @author Andr&#233; Juffer, Triacle Biocomputing
- * @param <T> Entity type.
+ * @param <T> Event type.
  */
-public class Handling<T extends Eventful> 
+public class EventBus<T extends Event>
+    extends MapBus<T, EventHandler<T> >
 {
-    
-    protected void publish(T entity)
+    public EventBus()
     {
-        Collection<DomainEvent> domainEvents = entity.getDomainEvents();
-    }
+        super();
+    }    
 }

@@ -7,12 +7,19 @@
 
 package com.tribc.cqrs.domain.command;
 
-import com.tribc.ddd.domain.handling.Handled;
+import com.tribc.ddd.domain.handling.Handle;
+import java.time.Instant;
 
 /**
- * Command send to the domain.
+ * Specifies what a client application wants to get done (a task).
  * @author  Andr&#233; Juffer, Triacle Biocomputing
  */
-public interface Command extends Handled
+public interface Command 
+    extends Handle
 {
+    /**
+     * Returns time-stamp this command was issued.
+     * @return Time-stamp.
+     */
+    Instant issuedOn();
 }

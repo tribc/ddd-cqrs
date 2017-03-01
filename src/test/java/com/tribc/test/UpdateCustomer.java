@@ -5,23 +5,23 @@
  */
 package com.tribc.test;
 
-import com.tribc.cqrs.domain.command.Command;
+import com.tribc.cqrs.domain.command.AbstractCommand;
 
 /**
  *
  * @author ajuffer
  */
-public class UpdateCustomer implements Command
+public class UpdateCustomer 
+    extends AbstractCommand
 {
     private final Long customerId_;
     private final String name_;
-    private boolean handled_;
     
     public UpdateCustomer(Long customerId, String name)
-    {   
+    {
+        super(UpdateCustomer.class.getName());
         customerId_ = customerId;
         name_ = name;
-        handled_ = false;
     }
     
     public Long getCustomerid()
@@ -34,14 +34,4 @@ public class UpdateCustomer implements Command
         return name_;
     }
 
-    @Override
-    public boolean isHandled() 
-    {
-        return handled_;
-    }
-    
-    public void handled()
-    {
-        handled_ = true;
-    }
 }

@@ -7,17 +7,19 @@
 
 package com.tribc.ddd.domain.event;
 
-import com.tribc.ddd.domain.handling.internal.AbstractHandlerProvider;
+import com.tribc.ddd.domain.handling.Handle;
+import java.time.Instant;
 
 /**
- * Holds available domain event handlers.
+ * Event raised in the domain.
  * @author Andr&#233; Juffer, Triacle Biocomputing
  */
-public class DomainEventHandlerProvider 
-    extends AbstractHandlerProvider<DomainEventHandler, DomainEvent>
-{
-    public DomainEventHandlerProvider()
-    {
-        super();
-    }
+public interface Event 
+    extends Handle
+{  
+    /**
+     * Returns the time-stamp of this event.
+     * @return Time stamp.
+     */
+    Instant occuredOn();
 }
