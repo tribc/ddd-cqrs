@@ -24,6 +24,7 @@ public class TestUpdateCustomerAndEventHandling {
         r.add(c);
         
         CommandBus commandBus = new CommandBus();
+        
         EventBus eventBus = new EventBus();
         CustomerUpdatedHandler customerUpdatedHandler = new CustomerUpdatedHandler();
         System.out.println(CustomerUpdatedHandler.class.getGenericSuperclass());
@@ -37,6 +38,7 @@ public class TestUpdateCustomerAndEventHandling {
         UpdateCustomerHandler updateCustomerHandler = 
             new UpdateCustomerHandler(r, eventBus);
         System.out.println(UpdateCustomer.class);
+        System.out.println(updateCustomerHandler.getClass().getGenericSuperclass());
         commandBus.match(UpdateCustomer.class.getName(), updateCustomerHandler);
         
         f.update(c.getCustomerId(), "New Name");

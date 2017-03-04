@@ -6,6 +6,7 @@
  */
 package com.tribc.test;
 
+import com.tribc.cqrs.domain.command.Command;
 import java.lang.reflect.Type;
 
 /**
@@ -22,8 +23,10 @@ public class TestUpdateCustomer {
         UpdateCustomer command = new UpdateCustomer(Long.valueOf(1), "Ata Bos");
         Type[] types = command.getClass().getGenericInterfaces();
         System.out.println("Types: " + types);
-        System.out.println("Generic superclass: " + command.getClass().getGenericSuperclass());
+        System.out.println("Generic superclass: " + command.getClass());
         System.out.println("Issued on: " + command.issuedOn());
+        
+        Command c = command;
     }
     
 }

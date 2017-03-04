@@ -8,15 +8,14 @@
 package com.tribc.ddd.domain.event;
 
 import com.tribc.ddd.domain.handling.AbstractHandler;
-import com.tribc.ddd.domain.handling.Handle;
 
 /**
  * Handles events.
  * @author Andr&#233; Juffer, Triacle Biocomputing
- * @param <E> Event of type E.
+ * @param <T> Event type.
  */
-public abstract class EventHandler<E extends Handle> 
-    extends AbstractHandler<E>
+public abstract class EventHandler<T extends Event> 
+    extends AbstractHandler<T>
 {
     protected EventHandler()
     {

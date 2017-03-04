@@ -10,19 +10,18 @@ import java.util.Collection;
 /**
  * Receives a handle and matches it to a handler.
  * @author Andr&#233; Juffer, Triacle Biocomputing
- * @param <T> Handle type.
  */
-public interface Bus <T extends Handle>
+public interface Bus
 {
     /**
      * Handles handle.
-     * @param handle Handle that requires handling.
+     * @param handle Handle.
      */
-    void handle(T handle);
+    void handle(Handle handle);
     
     /**
      * Handles multiple handles.
      * @param handles Handles that require handling.
      */
-    void handle(Collection<T> handles);
+    void handle(Collection<? extends Handle> handles);
 }

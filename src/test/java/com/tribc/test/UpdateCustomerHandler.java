@@ -34,7 +34,6 @@ public class UpdateCustomerHandler
         if ( !command.isHandled() ) {
             customer.setName(command.getName());
             customerRepository_.update(customer);
-            command.handled();
             
             Collection<Event> events = customer.getEvents();
             eventBus_.handle(events);

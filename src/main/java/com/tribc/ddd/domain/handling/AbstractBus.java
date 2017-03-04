@@ -6,18 +6,29 @@
 
 package com.tribc.ddd.domain.handling;
 
+import java.util.Collection;
+
 /**
  *
  * @author Andr&#233; Juffer, Triacle Biocomputing
  * @param <T> Handle type.
  * @param <H> Handler type.
  */
-public abstract class AbstractBus <T extends Handle,H extends Handler<T> >
-    implements Bus <T>
+public abstract class AbstractBus <T extends Handle,
+                                   H extends Handler<T>>
+    implements Bus
 {
     protected AbstractBus()
     {        
     }
+    
+    @Override
+    public abstract void handle(Handle handle);
+    
+    /*
+    @Override
+    public abstract void handle(Collection<Handle> handles);
+    */
     
     /**
      * Matches handler of type T to handler of type H.

@@ -12,13 +12,11 @@ import java.util.Map;
 /**
  * A simple implementation that uses a map to match handles with handlers.
  * @author Andr&#233; Juffer, Triacle Biocomputing
- * @param <T> Handle type.
- * @param <H> Handler type.
  */
-public class MapBus <T extends Handle,H extends Handler<T> > 
-    extends AbstractBus <T,H>
+public class MapBus
+    implements Bus
 {   
-    private final Map<String, H> handlers_;
+    private final Map<String, Handler> handlers_;
     
     public MapBus()
     {
@@ -27,11 +25,13 @@ public class MapBus <T extends Handle,H extends Handler<T> >
     }
 
     /**
+     * Matches handler (of type T) to handler of type H.
+     * @param handleId Unique handle identifier.
+     * @param handler Handler that is matched to the handle.
      * @throws NullPointerException if either handleId or handler are null.
      * @throws IllegalStateException if a handler was already assigned to handleId.
      */
-    @Override
-    public void match(String handleId, H handler)
+    protected void match(String handleId, Handler handler)
     {
         // Validate.
         if ( handleId == null ) {
@@ -51,21 +51,21 @@ public class MapBus <T extends Handle,H extends Handler<T> >
      * @throws NullPointerException if no handlers can be found.
      */
     @Override
-    public void handle(T handle) 
+    public void handle(Handle handle) 
     {
         if ( !handlers_.containsKey(handle.getHandleId()) ) {
             throw new NullPointerException("No handler for '" + 
                                             handle.getHandleId() + "'.");
         }
-        H handler = handlers_.get(handle.getHandleId());
+        Handler handler = handlers_.get(handle.getHandleId());
         handler.handle(handle);
         handle.handled();
     }
     
     @Override
-    public void handle(Collection<T> handles)
+    public void handle(Collection<? extends Handle> handles)
     {
-        for (T handle : handles) {
+        for (Handle handle : handles) {
             this.handle(handle);
         }
     }

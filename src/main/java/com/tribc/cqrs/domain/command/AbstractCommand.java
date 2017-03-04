@@ -11,7 +11,7 @@ import com.tribc.ddd.domain.handling.AbstractHandle;
 import java.time.Instant;
 
 /**
- *
+ * Base class for all commands.
  * @author Andr&#233; Juffer, Triacle Biocomputing
  */
 public class AbstractCommand

@@ -10,13 +10,13 @@ package com.tribc.ddd.domain.handling;
 /**
  * Operates a handle.
  * @author Andr&#233; Juffer, Triacle Biocomputing
- * @param <T> Handled type. An instance of T is handled by this handler.
+ * @param <T> Handle type.
  */
 public interface Handler<T extends Handle>
 {
     /**
-     * Handles t
-     * @param t Handled.
+     * Handles handle.
+     * @param handle Handle.
      */
-    void handle(T t);
+    void handle(T handle);
 }

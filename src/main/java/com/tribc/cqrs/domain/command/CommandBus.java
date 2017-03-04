@@ -10,15 +10,26 @@ package com.tribc.cqrs.domain.command;
 import com.tribc.ddd.domain.handling.MapBus;
 
 /**
- * Receives a command and matches a handler to it.
+ * Receives a command and matches a command handler to it.
  * @author Andr&#233; Juffer, Triacle Biocomputing
- * @param <T> Command type
  */
-public class CommandBus<T extends Command>
-    extends MapBus<T, CommandHandler<T> >
+public class CommandBus
+    extends MapBus
 {
     public CommandBus()
     {
         super();
+    }
+    
+    /**
+     * Match command to command handler.
+     * @param <C> Command type.
+     * @param commandId Unique command type identifier.
+     * @param commandHandler Command handler
+     */
+    public <C extends Command> 
+    void match(String commandId, CommandHandler<C> commandHandler)
+    {
+        super.match(commandId, commandHandler);
     }
 }
