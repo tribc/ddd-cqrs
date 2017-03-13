@@ -53,13 +53,15 @@ public class MapBus
     @Override
     public void handle(Handle handle) 
     {
-        if ( !handlers_.containsKey(handle.getHandleId()) ) {
-            throw new NullPointerException("No handler for '" + 
-                                            handle.getHandleId() + "'.");
+        if ( !handle.isHandled() ) {
+            if ( !handlers_.containsKey(handle.getHandleId()) ) {
+                throw new NullPointerException("No handler for '" + 
+                                                handle.getHandleId() + "'.");
+            }
+            Handler handler = handlers_.get(handle.getHandleId());
+            handler.handle(handle);
+            handle.handled();
         }
-        Handler handler = handlers_.get(handle.getHandleId());
-        handler.handle(handle);
-        handle.handled();
     }
     
     @Override
