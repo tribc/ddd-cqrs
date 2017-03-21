@@ -55,8 +55,8 @@ public class MapBus
     {
         if ( !handle.isHandled() ) {
             if ( !handlers_.containsKey(handle.getHandleId()) ) {
-                throw new NullPointerException("No handler for '" + 
-                                                handle.getHandleId() + "'.");
+                throw new NoHandlerException(handle.getHandleId() + 
+                                             ": No handler register for this handle.");
             }
             Handler handler = handlers_.get(handle.getHandleId());
             handler.handle(handle);
