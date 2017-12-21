@@ -8,15 +8,15 @@
 package com.tribc.ddd.domain.handling;
 
 /**
- * Operates a handle.
+ * Deals with or manages a handleable.
  * @author Andr&#233; Juffer, Triacle Biocomputing
- * @param <T> Handle type.
+ * @param <T> Handleable type.
  */
-public interface Handler<T extends Handle>
+public interface Handler<T extends Handleable>
 {
     /**
-     * Handles handle.
-     * @param handle Handle.
+     * Deals with a handleable
+     * @param handleable Handleable
      */
-    void handle(T handle);
+    void handle(T handleable);
 }

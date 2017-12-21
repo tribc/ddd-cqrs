@@ -10,7 +10,6 @@ package com.tribc.test;
 import com.tribc.ddd.domain.event.AbstractEvent;
 
 /**
- *
  * @author Andr&#233; Juffer, Triacle Biocomputing
  */
 public class CustomerUpdated 
@@ -20,7 +19,7 @@ public class CustomerUpdated
         
     public CustomerUpdated(Long customerId)
     {
-        super(CustomerUpdated.class.getName());
+        super(CustomerUpdated.class);
         customerId_ = customerId;
     }
     

@@ -7,7 +7,7 @@
 
 package com.tribc.cqrs.domain.command;
 
-import com.tribc.ddd.domain.handling.AbstractHandle;
+import com.tribc.ddd.domain.handling.AbstractHandleable;
 import java.time.Instant;
 
 /**
@@ -15,21 +15,27 @@ import java.time.Instant;
  * @author Andr&#233; Juffer, Triacle Biocomputing
  */
 public class AbstractCommand
-    extends AbstractHandle
+    extends AbstractHandleable
     implements Command
 {
-    private final Instant time_;
+    private final Instant issuedOn_;
+    
+    protected AbstractCommand(Class clazz)
+    {
+        super(clazz);
+        issuedOn_ = Instant.now();
+    }
     
     protected AbstractCommand(String handleId)
     {
         super(handleId);
-        time_ = Instant.now();
+        issuedOn_ = Instant.now();
     }
     
     @Override
     public Instant issuedOn()
     {
-        return time_;
+        return issuedOn_;
     }
     
 }

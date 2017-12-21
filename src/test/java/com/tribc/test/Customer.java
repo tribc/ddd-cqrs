@@ -33,7 +33,7 @@ public class Customer
         return customerId_;
     }
     
-    public void setName(String name)
+    public void updateName(String name)
     {
         name_ = name;
         events_.add(new CustomerUpdated(customerId_));
@@ -50,5 +50,16 @@ public class Customer
     public void clearEvents() 
     {
         events_.clear();
+    }
+    
+    @Override
+    public String toString()
+    {
+        String newline = System.getProperty("line.separator");
+        StringBuilder s = new StringBuilder("Customer : {").append(newline);
+        s.append("customerId - ").append(customerId_).append(newline);
+        s.append("name - ").append(name_).append(newline);
+        s.append("}");
+        return s.toString();
     }
 }

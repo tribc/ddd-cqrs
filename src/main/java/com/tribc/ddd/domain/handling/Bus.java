@@ -1,27 +1,30 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (c) Triacle Biocomputing. All rights reserved.
+ * All information contained herein is proprietary and confidential to Triacle
+ * Biocomputing.  Any use, reproduction, or disclosure without the written
+ * permission of Triacle Biocomputing is prohibited.
  */
+
 package com.tribc.ddd.domain.handling;
 
 import java.util.Collection;
 
 /**
- * Receives a handle and matches it to a handler.
+ * Receives a handleable, and matches it to handlers that subsequently 
+ * deal with it.
  * @author Andr&#233; Juffer, Triacle Biocomputing
  */
 public interface Bus
 {
     /**
-     * Handles handle.
-     * @param handle Handle.
+     * Deals with a single handleable.
+     * @param handleable Handleable.
      */
-    void handle(Handle handle);
+    void handle(Handleable handleable);
     
     /**
      * Handles multiple handles.
-     * @param handles Handles that require handling.
+     * @param handleables Handleable collection.
      */
-    void handle(Collection<? extends Handle> handles);
+    void handle(Collection<? extends Handleable> handleables);
 }

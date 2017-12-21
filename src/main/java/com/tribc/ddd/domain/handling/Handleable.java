@@ -10,32 +10,32 @@ package com.tribc.ddd.domain.handling;
 import java.time.Instant;
 
 /**
- * Marks something that should be handled by some handler.
+ * Something that is capable of being handled.
  * @author Andr&#233; Juffer, Triacle Biocomputing
  */
-public interface Handle
+public interface Handleable
 {
     /**
-     * Marks that this handled was already handled by a handler. Calling this method
-     * ensures that this handle is handled more than once.
+     * Marks that this handleable has been dealt with to ensure that it is 
+     * dealt with not more than once.
      */
     void handled();
     
     /**
-     * Was already handled by a handler?
+     * Was this handleable already handled?
      * @return Result.
      */
     boolean isHandled();
     
     /**
-     * Returns time this handle was handled.
-     * @return Time-stamp.
+     * Returns timestamp this handleable was handled.
+     * @return Timestamp.
      */
     Instant handledOn();
     
     /**
-     * Returns an unique identifier.
+     * Returns an identifier that uniquely identifies this handleable.
      * @return Identifier.
      */
-    String getHandleId();
+    String getHandleableId();
 }

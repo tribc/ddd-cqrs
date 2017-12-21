@@ -7,19 +7,19 @@
 
 package com.tribc.ddd.domain.event;
 
-import com.tribc.ddd.domain.handling.Handle;
 import java.time.Instant;
+import com.tribc.ddd.domain.handling.Handleable;
 
 /**
- * Event raised in the domain.
+ * Event raised in the domain, a domain event.
  * @author Andr&#233; Juffer, Triacle Biocomputing
  */
 public interface Event 
-    extends Handle
+    extends Handleable
 {  
     /**
-     * Returns the time-stamp of this event.
-     * @return Time stamp.
+     * Returns the timestamp of this event.
+     * @return Timestamp.
      */
-    Instant occuredOn();
+    Instant occurredOn();
 }

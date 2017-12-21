@@ -7,29 +7,35 @@
 
 package com.tribc.ddd.domain.event;
 
-import com.tribc.ddd.domain.handling.AbstractHandle;
+import com.tribc.ddd.domain.handling.AbstractHandleable;
 import java.time.Instant;
 
 /**
- * Base class for all events.
+ * Base class for all domain events.
  * @author Andr&#233; Juffer, Triacle Biocomputing
  */
 public class AbstractEvent 
-    extends AbstractHandle
+    extends AbstractHandleable
     implements Event
 {
-    private final Instant time_;
+    private final Instant occurredOn_;
     
-    protected AbstractEvent(String handleId)
+    protected AbstractEvent(Class clazz)
     {
-        super(handleId);
-        time_ = Instant.now();
+        super(clazz);
+        occurredOn_ = Instant.now();
+    }
+    
+    protected AbstractEvent(String handleableId)
+    {
+        super(handleableId);
+        occurredOn_ = Instant.now();
     }
 
     @Override
-    public Instant occuredOn() 
+    public Instant occurredOn() 
     {
-        return time_;
+        return occurredOn_;
     }
     
 }

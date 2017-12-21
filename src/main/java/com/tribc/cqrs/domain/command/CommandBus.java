@@ -10,7 +10,8 @@ package com.tribc.cqrs.domain.command;
 import com.tribc.ddd.domain.handling.MapBus;
 
 /**
- * Receives a command and matches a command handler to it.
+ * Receives a command and matches it to multiple command handler that subsequently 
+ * deal with the command.
  * @author Andr&#233; Juffer, Triacle Biocomputing
  */
 public class CommandBus

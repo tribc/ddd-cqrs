@@ -1,22 +1,27 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (c) Triacle Biocomputing. All rights reserved.
+ * All information contained herein is proprietary and confidential to Triacle
+ * Biocomputing.  Any use, reproduction, or disclosure without the written
+ * permission of Triacle Biocomputing is prohibited.
  */
+
 package com.tribc.ddd.domain.handling;
 
-import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
- * A simple implementation that uses a map to match handles with handlers.
+ * A simple implementation that uses a map to match a handle with multiple handlers. 
+ * A handleable identifier serves as the key to link handlers to the handleable.
  * @author Andr&#233; Juffer, Triacle Biocomputing
  */
 public class MapBus
-    implements Bus
+    extends AbstractBus
 {   
-    private final Map<String, Handler> handlers_;
+    private final Map<String, Set<Handler>> handlers_;
+    
     
     public MapBus()
     {
@@ -25,50 +30,53 @@ public class MapBus
     }
 
     /**
-     * Matches handler (of type T) to handler of type H.
-     * @param handleId Unique handle identifier.
-     * @param handler Handler that is matched to the handle.
-     * @throws NullPointerException if either handleId or handler are null.
-     * @throws IllegalStateException if a handler was already assigned to handleId.
+     * @throws NullPointerException if handleableId or handler or both are null.
      */
-    protected void match(String handleId, Handler handler)
+    @Override
+    public void match(String handleableId, Handler handler)
     {
         // Validate.
-        if ( handleId == null ) {
-            throw new NullPointerException("An handle identifier must be provided. ");
+        if ( handleableId == null ) {
+            throw new NullPointerException("A handleable identifier must be provided. ");
         }
         if ( handler == null ) {
             throw new NullPointerException("A handler must be provided.");
         }
-        if ( handlers_.containsKey(handleId) ) {
-            throw new IllegalStateException("A handler for '" + handleId +
-                                            "' was already provided.");
+        
+        // Match.
+        if ( handlers_.containsKey(handleableId) ) {
+            Set<Handler> handlers = handlers_.get(handleableId);
+            handlers.add(handler);
+        } else {
+            Set<Handler> handlers = new HashSet<>();
+            handlers.add(handler);
+            handlers_.put(handleableId, handlers);
         }
-        handlers_.put(handleId, handler);
     }
 
     /**
-     * @throws NullPointerException if no handlers can be found.
+     * Handles or deals with a handleable. After handling, the handleable is 
+     * notified that it has been dealt with.
+     * @param handleable Handleable.
+     * @throws IllegalStateException if no handlers are registered for the 
+     * handleable.
      */
     @Override
-    public void handle(Handle handle) 
+    public void handle(Handleable handleable) 
     {
-        if ( !handle.isHandled() ) {
-            if ( !handlers_.containsKey(handle.getHandleId()) ) {
-                throw new NoHandlerException(handle.getHandleId() + 
-                                             ": No handler register for this handle.");
+        if ( !handleable.isHandled() ) {
+            if ( !handlers_.containsKey(handleable.getHandleableId()) ) {
+                String handleableId = handleable.getHandleableId();
+                throw new IllegalStateException(
+                    handleableId + ": No handler register for this handleable."
+                );
             }
-            Handler handler = handlers_.get(handle.getHandleId());
-            handler.handle(handle);
-            handle.handled();
+            Set<Handler> handlers = handlers_.get(handleable.getHandleableId());
+            for (Handler handler: handlers) {
+                handler.handle(handleable);
+            }
+            handleable.handled();
         }
     }
-    
-    @Override
-    public void handle(Collection<? extends Handle> handles)
-    {
-        for (Handle handle : handles) {
-            this.handle(handle);
-        }
-    }
+
 }

@@ -1,7 +1,8 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (c) Triacle Biocomputing. All rights reserved.
+ * All information contained herein is proprietary and confidential to Triacle
+ * Biocomputing.  Any use, reproduction, or disclosure without the written
+ * permission of Triacle Biocomputing is prohibited.
  */
 
 package com.tribc.ddd.domain.handling;
@@ -9,13 +10,10 @@ package com.tribc.ddd.domain.handling;
 import java.util.Collection;
 
 /**
- *
+ * Base class for a bus.
  * @author Andr&#233; Juffer, Triacle Biocomputing
- * @param <T> Handle type.
- * @param <H> Handler type.
  */
-public abstract class AbstractBus <T extends Handle,
-                                   H extends Handler<T>>
+public abstract class AbstractBus 
     implements Bus
 {
     protected AbstractBus()
@@ -23,18 +21,31 @@ public abstract class AbstractBus <T extends Handle,
     }
     
     @Override
-    public abstract void handle(Handle handle);
-    
-    /*
-    @Override
-    public abstract void handle(Collection<Handle> handles);
-    */
+    public abstract void handle(Handleable handleable);
     
     /**
-     * Matches handler of type T to handler of type H.
-     * @param handleId Unique handle identifier.
-     * @param handler Handler that is matched to the handle.
+     * Matches handleable to handler.
+     * @param clazz Handleable class.
+     * @param handler Handler.
      */
-    public abstract void match(String handleId, H handler);
+    public void match(Class clazz, Handler handler)
+    {
+        this.match(clazz.getName(), handler);
+    }
+    
+    /**
+     * Matches handleable to handler.
+     * @param handleableId Unique handleable identifier.
+     * @param handler Handler.
+     */
+    public abstract void match(String handleableId, Handler handler);    
+    
+    @Override
+    public void handle(Collection<? extends Handleable> handleables)
+    {
+        for (Handleable handleable : handleables) {
+            this.handle(handleable);
+        }        
+    }
     
 }

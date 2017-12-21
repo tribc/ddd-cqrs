@@ -19,29 +19,36 @@ public class TestUpdateCustomerAndEventHandling {
      */
     public static void main(String[] args) 
     {
-        CustomerRepository r = new MapCustomerRepository();
-        Customer c = new Customer(new Long(1), "Foo Bar");
-        r.add(c);
-        
-        CommandBus commandBus = new CommandBus();
+        Long customerId = new Long(1);
+        CustomerRepository customerRepository = new MapCustomerRepository();
+        Customer c = new Customer(customerId, "André H. Juffer");
+        customerRepository.add(c);
+        System.out.println("Customer before: " + c);
         
         EventBus eventBus = new EventBus();
         CustomerUpdatedHandler customerUpdatedHandler = new CustomerUpdatedHandler();
-        System.out.println(CustomerUpdatedHandler.class.getGenericSuperclass());
-        eventBus.match(CustomerUpdated.class.getName(), customerUpdatedHandler);
+        System.out.println("Generic Superclasses of CustomerUpdatedHandler: " + 
+                           CustomerUpdatedHandler.class.getGenericSuperclass());
+        eventBus.match(CustomerUpdated.class, customerUpdatedHandler);
+        eventBus.match(CustomerUpdated.class, new Notifier());
         
-        SomethingOccuredHandler somethingOccuredHandler = new SomethingOccuredHandler();
-        eventBus.match(SomethingOccurred.class.getName(), somethingOccuredHandler);
+        eventBus.match(SomethingOccurred.class.getName(), 
+                       new SomethingOccuredHandler());
         
-        CustomerFacade f = new CustomerFacade(commandBus);
+        CommandBus commandBus = new CommandBus();        
+        CustomerFacade customerFacade = new CustomerFacade(commandBus);
         
         UpdateCustomerHandler updateCustomerHandler = 
-            new UpdateCustomerHandler(r, eventBus);
-        System.out.println(UpdateCustomer.class);
-        System.out.println(updateCustomerHandler.getClass().getGenericSuperclass());
-        commandBus.match(UpdateCustomer.class.getName(), updateCustomerHandler);
+            new UpdateCustomerHandler(customerRepository, eventBus);
+        System.out.println("UpdateCustomer class: " + UpdateCustomer.class);
+        System.out.println("Generic Superclasses of UpdateCustomerHandler: " + 
+                           updateCustomerHandler.getClass().getGenericSuperclass());
+        commandBus.match(UpdateCustomer.class, updateCustomerHandler);
         
-        f.update(c.getCustomerId(), "New Name");
+        customerFacade.update(c.getCustomerId(), "André Harold Juffer");
+        
+        Customer updated = customerRepository.forCustomerId(customerId);
+        System.out.println("Updated customer: " + updated);
     }
     
 }

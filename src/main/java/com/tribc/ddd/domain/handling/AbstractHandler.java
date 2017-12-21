@@ -11,7 +11,7 @@ package com.tribc.ddd.domain.handling;
  * @author Andr&#233; Juffer, Triacle Biocomputing
  * @param <T> Handle type.
  */
-public abstract class AbstractHandler<T extends Handle>
+public abstract class AbstractHandler<T extends Handleable>
     implements Handler<T>
 {
     protected AbstractHandler()

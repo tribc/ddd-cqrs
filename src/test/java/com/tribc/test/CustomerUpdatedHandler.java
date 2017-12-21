@@ -15,7 +15,8 @@ public class CustomerUpdatedHandler
     extends EventHandler<CustomerUpdated>
 {
     public CustomerUpdatedHandler()
-    {        
+    {
+        super();
     }
     
     @Override

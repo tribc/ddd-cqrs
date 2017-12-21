@@ -8,9 +8,11 @@
 package com.tribc.ddd.domain.event;
 
 import com.tribc.ddd.domain.handling.MapBus;
+import java.util.Collection;
 
 /**
- * Receives an event and matches an event handler to it.
+ * Receives an event and matches event handlers to it that subsequently 
+ * deal with the event.
  * @author Andr&#233; Juffer, Triacle Biocomputing
  */
 public class EventBus
@@ -22,7 +24,7 @@ public class EventBus
     }    
     
     /**
-     * Match event to event handler.
+     * Matches event to event handler.
      * @param <E> Event type.
      * @param eventId Unique event type identifier.
      * @param eventHandler Command handler
@@ -31,5 +33,32 @@ public class EventBus
     void match(String eventId, EventHandler<E> eventHandler)
     {
         super.match(eventId, eventHandler);
-    }    
+    }
+    
+    /**
+     * Handles all events of an eventful. After handling, the eventful is 
+     * cleared of all events.
+     * @param eventful An Eventful.
+     */
+    public void handle(Eventful eventful)
+    {
+        Collection<Event> events = eventful.getEvents();
+        this.handle(events);
+        eventful.clearEvents();
+    }
+    
+    /**
+     * Handle all events of an eventful asynchronously in a new thread. After the new
+     * thread has started, control is immediately returned to the calling client.
+     * @param eventful Eventful.
+     * @see #handle(com.tribc.ddd.domain.event.Eventful) 
+     */
+    public void handleAsync(Eventful eventful)
+    {
+        Runnable r = () -> {
+            this.handle(eventful);
+        };
+        Thread t = new Thread(r);
+        t.start();
+    }
 }
