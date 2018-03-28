@@ -51,8 +51,11 @@ public class EventBus
      * Handle all events of an eventful asynchronously in a new thread. After the new
      * thread has started, control is immediately returned to the calling client.
      * @param eventful Eventful.
-     * @see #handle(com.tribc.ddd.domain.event.Eventful) 
+     * @see #handle(com.tribc.ddd.domain.event.Eventful
+     * @deprecated Event handler itself should decide whether it can handle 
+     * events asynchronously.
      */
+    @Deprecated
     public void handleAsync(Eventful eventful)
     {
         Runnable r = () -> {

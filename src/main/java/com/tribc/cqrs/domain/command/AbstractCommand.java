@@ -18,7 +18,7 @@ public class AbstractCommand
     extends AbstractHandleable
     implements Command
 {
-    private final Instant issuedOn_;
+    private final Instant issuedOn_;    
     
     protected AbstractCommand(Class clazz)
     {
@@ -37,5 +37,5 @@ public class AbstractCommand
     {
         return issuedOn_;
     }
-    
+
 }

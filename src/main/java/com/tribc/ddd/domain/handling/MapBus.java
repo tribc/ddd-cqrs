@@ -64,7 +64,7 @@ public class MapBus
     @Override
     public void handle(Handleable handleable) 
     {
-        if ( !handleable.isHandled() ) {
+        if ( !handleable.isHandled() && !handleable.handlingNow() ) {
             if ( !handlers_.containsKey(handleable.getHandleableId()) ) {
                 String handleableId = handleable.getHandleableId();
                 throw new IllegalStateException(
@@ -72,9 +72,12 @@ public class MapBus
                 );
             }
             Set<Handler> handlers = handlers_.get(handleable.getHandleableId());
-            for (Handler handler: handlers) {
+            handlers.forEach((handler) -> {
+                handleable.handling();
                 handler.handle(handleable);
-            }
+            });
+            
+            // Mark handled to avoid double-hanling.
             handleable.handled();
         }
     }

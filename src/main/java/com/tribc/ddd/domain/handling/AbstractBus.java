@@ -43,7 +43,7 @@ public abstract class AbstractBus
     @Override
     public void handle(Collection<? extends Handleable> handleables)
     {
-        for (Handleable handleable : handleables) {
+        for (Handleable handleable : handleables) {            
             this.handle(handleable);
         }        
     }

@@ -17,7 +17,8 @@ public interface Eventful
 {
     /**
      * Returns all raised events.
-     * @return Domain events. May be empty. Never null.
+     * @return Domain events that have not been handled as of yet. May be empty. 
+     * Never null. Must be modifiable to ensure that handlers can change event status.
      */
     Collection<Event> getEvents();
     

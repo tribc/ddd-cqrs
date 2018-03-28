@@ -18,6 +18,7 @@ public class AbstractHandleable
 {
     private final String handlebleId_;
     private boolean handled_;
+    private boolean handling_;
     private Instant time_;
     
     /**
@@ -29,6 +30,7 @@ public class AbstractHandleable
     {
         handlebleId_ = clazz.getName();
         handled_ = false;
+        handling_ = false;
         time_ = Instant.ofEpochMilli(0);
     }
     
@@ -52,6 +54,7 @@ public class AbstractHandleable
     public void handled() 
     {
         handled_ = true;
+        handling_ = false;
         this.setTime(Instant.now());
     }
 
@@ -71,5 +74,17 @@ public class AbstractHandleable
     public Instant handledOn()
     {
         return time_;
+    }
+
+    @Override
+    public void handling() 
+    {
+        handling_ = true;
+    }
+
+    @Override
+    public boolean handlingNow() 
+    {
+        return handling_;
     }
 }

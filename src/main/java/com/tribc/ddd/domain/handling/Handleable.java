@@ -16,6 +16,18 @@ import java.time.Instant;
 public interface Handleable
 {
     /**
+     * Marks this handleable is now being handled. Thus do not handle 
+     * it again.
+     */
+    void handling();
+    
+    /**
+     * Inquires whether this handleable is currently being handled.
+     * @return Result.
+     */
+    boolean handlingNow();
+    
+    /**
      * Marks that this handleable has been dealt with to ensure that it is 
      * dealt with not more than once.
      */

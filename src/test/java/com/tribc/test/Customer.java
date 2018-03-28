@@ -43,7 +43,11 @@ public class Customer
     @Override
     public Collection<Event> getEvents() 
     {
-        return events_;
+        Collection<Event> events = new HashSet<>();
+        events_.stream().filter((event) -> ( !event.isHandled() || !event.handlingNow() )).forEachOrdered((event) -> {
+            events.add(event);
+        });
+        return events;
     }
 
     @Override
