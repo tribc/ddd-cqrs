@@ -65,19 +65,24 @@ public class MapBus
     public void handle(Handleable handleable) 
     {
         if ( !handleable.isHandled() && !handleable.handlingNow() ) {
+            
+            // Throw exception if no handler can be found.
+            // NOTE: May relax this and simply log that no handler is available.
             if ( !handlers_.containsKey(handleable.getHandleableId()) ) {
                 String handleableId = handleable.getHandleableId();
                 throw new IllegalStateException(
                     handleableId + ": No handler register for this handleable."
                 );
             }
+            
+            // Mark ongoing handling of event.
+            handleable.handling();
             Set<Handler> handlers = handlers_.get(handleable.getHandleableId());
             handlers.forEach((handler) -> {
-                handleable.handling();
                 handler.handle(handleable);
             });
             
-            // Mark handled to avoid double-hanling.
+            // Mark handling is complete.
             handleable.handled();
         }
     }

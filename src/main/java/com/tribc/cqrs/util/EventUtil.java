@@ -39,9 +39,9 @@ public class EventUtil {
     }
     
     /**
-     * Selects unhandled events from a list of events.
+     * Selects events currently not being handled from a list of events.
      * @param events Events.
-     * @return Unhandled events. 
+     * @return Events. May be empty.
      */
     public static Collection<Event> selectUnhandled(Collection<Event> events)
     {
