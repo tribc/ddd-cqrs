@@ -34,8 +34,8 @@ public class UpdateCustomerHandler
             customer.updateName(command.getName());
             customerRepository_.update(customer);
             
-            eventBus_.handleAsync(customer);
-            //eventBus_.handle(customer);
+            //eventBus_.handleAsync(customer);
+            eventBus_.handle(customer);
         }    
     }
     

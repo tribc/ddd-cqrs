@@ -19,7 +19,7 @@ public class TestUpdateCustomerAndEventHandling {
      */
     public static void main(String[] args) 
     {
-        Long customerId = new Long(1);
+        Long customerId = Long.valueOf(1);
         CustomerRepository customerRepository = new MapCustomerRepository();
         Customer c = new Customer(customerId, "André H. Juffer");
         customerRepository.add(c);
