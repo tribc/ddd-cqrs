@@ -6,20 +6,23 @@
 package com.tribc.test;
 
 import com.tribc.cqrs.domain.command.AbstractCommand;
+import com.tribc.ddd.domain.handling.HandleableId;
 
 /**
  *
  * @author ajuffer
  */
-public class UpdateCustomer 
-    extends AbstractCommand
-{
+public class UpdateCustomer extends AbstractCommand {
+    
+    public static final HandleableId HANDLEABLE_ID = 
+        HandleableId.valueOf(UpdateCustomer.class);
+    
     private final Long customerId_;
     private final String name_;
     
     public UpdateCustomer(Long customerId, String name)
     {
-        super(UpdateCustomer.class.getName());
+        super(HANDLEABLE_ID);
         customerId_ = customerId;
         name_ = name;
     }

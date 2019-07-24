@@ -8,18 +8,14 @@
 package com.tribc.cqrs.domain.command;
 
 import com.tribc.ddd.domain.handling.AbstractHandler;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 /**
  * Executes a command issued by the client application.
  * @author Andr&#233; Juffer, Triacle Biocomputing
- * @param <T> Command type.
+ * @param <C> Command type.
  */
-public abstract class CommandHandler<T extends Command>
-    extends AbstractHandler<T>
-{
-    protected CommandHandler()
-    {
-        super();
-    }
-
+@NoArgsConstructor( access = AccessLevel.PROTECTED )
+public abstract class CommandHandler<C extends Command> extends AbstractHandler<C> {
 }

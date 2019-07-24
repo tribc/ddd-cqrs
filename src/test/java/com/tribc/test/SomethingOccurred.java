@@ -7,19 +7,22 @@
 package com.tribc.test;
 
 import com.tribc.ddd.domain.event.AbstractEvent;
+import com.tribc.ddd.domain.handling.HandleableId;
 
 /**
  *
  * @author Andr&#233; Juffer, Triacle Biocomputing
  */
-public class SomethingOccurred 
-    extends AbstractEvent
-{
+public class SomethingOccurred extends AbstractEvent {
+
+    public static final HandleableId HANDLEABLE_ID = 
+        HandleableId.valueOf(SomethingOccurred.class);
+    
     private final Long customerId_;
     
     public SomethingOccurred(Long customerId)
     {
-        super(SomethingOccurred.class.getName());
+        super(HANDLEABLE_ID);
         customerId_ = customerId;
     }
     

@@ -7,42 +7,37 @@
 
 package com.tribc.ddd.domain.event;
 
+import com.tribc.ddd.domain.handling.HandleableId;
 import com.tribc.ddd.domain.handling.MapBus;
 import java.util.Collection;
+import lombok.NoArgsConstructor;
 
 /**
  * Receives an event and matches event handlers to it that subsequently 
  * deal with the event.
- * @author Andr&#233; Juffer, Triacle Biocomputing
+ * @author Andr&#233; Juffer, Triacle Biocomputing.
  */
-public class EventBus
-    extends MapBus
-{
-    public EventBus()
-    {
-        super();
-    }    
+@NoArgsConstructor
+public class EventBus extends MapBus<Event> {
     
     /**
      * Matches event to event handler.
-     * @param <E> Event type.
      * @param eventId Unique event type identifier.
      * @param eventHandler Command handler
      */
-    public <E extends Event> 
-    void match(String eventId, EventHandler<E> eventHandler)
-    {
+    public void match(HandleableId eventId, EventHandler<Event> eventHandler)
+    {        
         super.match(eventId, eventHandler);
     }
     
     /**
-     * Handles all events of an eventful. After handling, the eventful is 
-     * cleared of all events.
+     * Selects all unhandled events and handles them. After handling, the 
+     * eventful is cleared of all events.
      * @param eventful An Eventful.
      */
     public void handle(Eventful eventful)
     {
-        Collection<Event> events = eventful.getEvents();
+        Collection<Event> events = Events.selectUnhandled(eventful.getEvents());
         this.handle(events);
         eventful.clearEvents();
     }
@@ -52,10 +47,7 @@ public class EventBus
      * thread has started, control is immediately returned to the calling client.
      * @param eventful Eventful.
      * @see #handle(com.tribc.ddd.domain.event.Eventful
-     * @deprecated Event handler itself should decide whether it can handle 
-     * events asynchronously.
      */
-    @Deprecated
     public void handleAsync(Eventful eventful)
     {
         Runnable r = () -> {

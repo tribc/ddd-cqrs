@@ -11,46 +11,35 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import lombok.NonNull;
 
 /**
  * A simple implementation that uses a map to match a handle with multiple handlers. 
  * A handleable identifier serves as the key to link handlers to the handleable.
  * @author Andr&#233; Juffer, Triacle Biocomputing
+ * @param <T> Handleable type.
  */
-public class MapBus
-    extends AbstractBus
-{   
-    private final Map<String, Set<Handler>> handlers_;
+public class MapBus<T extends Handleable> extends AbstractBus<T> {
     
+    private final Map<String, Set<Handler>> handlers;    
     
     public MapBus()
     {
         super();
-        handlers_ = new HashMap<>();
+        this.handlers = new HashMap<>();
     }
 
-    /**
-     * @throws NullPointerException if handleableId or handler or both are null.
-     */
     @Override
-    public void match(String handleableId, Handler handler)
+    public void match(@NonNull HandleableId handleableId, @NonNull Handler handler)
     {
-        // Validate.
-        if ( handleableId == null ) {
-            throw new NullPointerException("A handleable identifier must be provided. ");
-        }
-        if ( handler == null ) {
-            throw new NullPointerException("A handler must be provided.");
-        }
-        
-        // Match.
-        if ( handlers_.containsKey(handleableId) ) {
-            Set<Handler> handlers = handlers_.get(handleableId);
-            handlers.add(handler);
+        String id = handleableId.getValue();        
+        if ( this.handlers.containsKey(id) ) {
+            Set<Handler> hs = this.handlers.get(id);
+            hs.add(handler);
         } else {
-            Set<Handler> handlers = new HashSet<>();
-            handlers.add(handler);
-            handlers_.put(handleableId, handlers);
+            Set<Handler> hs = new HashSet<>();
+            hs.add(handler);
+            this.handlers.put(id, hs);
         }
     }
 
@@ -62,23 +51,21 @@ public class MapBus
      * handleable.
      */
     @Override
-    public void handle(Handleable handleable) 
+    public void handle(@NonNull Handleable handleable) 
     {
-        if ( !handleable.isHandled() && !handleable.handlingNow() ) {
-            
-            // Throw exception if no handler can be found.
-            // NOTE: May relax this and simply log that no handler is available.
-            if ( !handlers_.containsKey(handleable.getHandleableId()) ) {
-                String handleableId = handleable.getHandleableId();
+        if ( !handleable.isHandled() && !handleable.isHandledNow() ) {
+            String id = handleable.getHandleableId().getValue();
+             
+            if ( !handlers.containsKey(id) ) {                
                 throw new IllegalStateException(
-                    handleableId + ": No handler register for this handleable."
+                    id + ": No handler registered for this handleable."
                 );
             }
             
             // Mark ongoing handling of event.
-            handleable.handling();
-            Set<Handler> handlers = handlers_.get(handleable.getHandleableId());
-            handlers.forEach((handler) -> {
+            handleable.nowHandled();
+            Set<Handler> hs = this.handlers.get(id);
+            hs.forEach((handler) -> {
                 handler.handle(handleable);
             });
             

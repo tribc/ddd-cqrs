@@ -7,13 +7,13 @@ package com.tribc.test;
 
 import com.tribc.cqrs.domain.command.CommandHandler;
 import com.tribc.ddd.domain.event.EventBus;
+import com.tribc.ddd.domain.handling.Handleable;
 
 /**
  *
  * @author ajuffer
  */
-public class UpdateCustomerHandler
-    extends CommandHandler<UpdateCustomer>
+public class UpdateCustomerHandler extends CommandHandler<UpdateCustomer>
 {
     private final CustomerRepository customerRepository_;
     private final EventBus eventBus_;
@@ -25,10 +25,9 @@ public class UpdateCustomerHandler
         eventBus_ = eventBus;
     }
     
-    @Override
-    public void handle(UpdateCustomer command) 
+   
+    private void handle(UpdateCustomer command) 
     {
-        if ( !command.isHandled() ) {
             Customer customer = 
                 customerRepository_.forCustomerId(command.getCustomerid());
             customer.updateName(command.getName());
@@ -36,7 +35,13 @@ public class UpdateCustomerHandler
             
             //eventBus_.handleAsync(customer);
             eventBus_.handle(customer);
-        }    
+           
+    }
+
+    @Override
+    public void handle(Handleable handleable) 
+    {
+        this.handle((UpdateCustomer)handleable);
     }
     
 }

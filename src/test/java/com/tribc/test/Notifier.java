@@ -24,24 +24,29 @@
 package com.tribc.test;
 
 import com.tribc.ddd.domain.event.EventHandler;
+import com.tribc.ddd.domain.handling.Handleable;
 
 /**
  *
  * @author Andr&#233; Juffer, Triacle Biocomputing
  */
-public class Notifier 
-    extends EventHandler<CustomerUpdated>
-{    
+public class Notifier extends EventHandler<CustomerUpdated> {
+    
     public Notifier()
     {
         super();
     }
     
-    @Override
-    public void handle(CustomerUpdated handleable) 
+    private void handle(CustomerUpdated handleable) 
     {
         Long customerId = handleable.getCustomerId();
         System.out.println("NOTICE: Customer #" + customerId + " has updated customer information.");
+    }
+
+    @Override
+    public void handle(Handleable handleable) 
+    {
+        this.handle((CustomerUpdated)handleable);
     }
     
 }

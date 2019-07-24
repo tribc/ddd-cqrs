@@ -8,83 +8,63 @@
 package com.tribc.ddd.domain.handling;
 
 import java.time.Instant;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Base class for an actual handleable.
  * @author Andr&#233; Juffer, Triacle Biocomputing
  */
-public class AbstractHandleable 
-    implements Handleable
+public class AbstractHandleable implements Handleable
 {
-    private final String handlebleId_;
-    private boolean handled_;
-    private boolean handling_;
-    private Instant time_;
+    @Getter
+    private final HandleableId handleableId;
     
-    /**
-     * Constructor.
-     * @param clazz Class. The <code>clazz.getName()</code> will serve as a 
-     * handleable identifier.
-     */
-    protected AbstractHandleable(Class clazz)
-    {
-        handlebleId_ = clazz.getName();
-        handled_ = false;
-        handling_ = false;
-        time_ = Instant.ofEpochMilli(0);
-    }
+    private boolean handled;
+    private boolean handling;
     
-    /**
-     * Constructor.
-     * @param handleableId Identifier for uniquely identifying this handleable.
-     */
-    protected AbstractHandleable(String handleableId)
-    {
-        handlebleId_ = handleableId;
-        handled_ = false;
-        time_ = Instant.ofEpochMilli(0);
-    }
+    @Setter(AccessLevel.PRIVATE)
+    private Instant time;
     
-    private void setTime(Instant time)
+    protected AbstractHandleable(HandleableId handlebleId)
     {
-        time_ = time;
+        this.handleableId = handlebleId;
+        this.handled = false;
+        this.handling = false;
+        this.time = Instant.ofEpochMilli(0);
     }
     
     @Override
     public void handled() 
     {
-        handled_ = true;
-        handling_ = false;
+        this.handled = true;
+        this.handling = false;
         this.setTime(Instant.now());
     }
 
     @Override
     public boolean isHandled() 
     {
-        return handled_;
-    }
-    
-    @Override
-    public String getHandleableId()
-    {
-        return handlebleId_;
+        return this.handled;
     }
     
     @Override
     public Instant handledOn()
     {
-        return time_;
+        return this.time;
     }
 
     @Override
-    public void handling() 
+    public void nowHandled() 
     {
-        handling_ = true;
+        this.handling = true;
     }
 
     @Override
-    public boolean handlingNow() 
+    public boolean isHandledNow() 
     {
-        return handling_;
+        return this.handling;
     }
+
 }

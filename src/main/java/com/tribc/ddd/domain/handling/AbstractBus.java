@@ -8,44 +8,32 @@
 package com.tribc.ddd.domain.handling;
 
 import java.util.Collection;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 /**
  * Base class for a bus.
  * @author Andr&#233; Juffer, Triacle Biocomputing
+ * @param <T> Handleable type.
  */
-public abstract class AbstractBus 
-    implements Bus
-{
-    protected AbstractBus()
-    {        
-    }
-    
-    @Override
-    public abstract void handle(Handleable handleable);
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public abstract class AbstractBus<T extends Handleable> implements Bus {
     
     /**
      * Matches handleable to handler.
-     * @param clazz Handleable class.
+     * @param id Identifier.
      * @param handler Handler.
      */
-    public void match(Class clazz, Handler handler)
-    {
-        this.match(clazz.getName(), handler);
-    }
-    
-    /**
-     * Matches handleable to handler.
-     * @param handleableId Unique handleable identifier.
-     * @param handler Handler.
-     */
-    public abstract void match(String handleableId, Handler handler);    
+    public abstract void match(@NonNull HandleableId id, @NonNull Handler handler);
     
     @Override
-    public void handle(Collection<? extends Handleable> handleables)
+    public abstract void handle(@NonNull Handleable handleable);
+    
+    @Override
+    public void handle(@NonNull Collection<? extends Handleable> handleables)
     {
-        for (Handleable handleable : handleables) {            
-            this.handle(handleable);
-        }        
+        handleables.forEach(handleable -> this.handle(handleable));
     }
     
 }

@@ -6,15 +6,18 @@
  */
 package com.tribc.ddd.domain.handling;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 /**
  *
  * @author Andr&#233; Juffer, Triacle Biocomputing
- * @param <T> Handle type.
+ * @param <T> Handleable type.
  */
-public abstract class AbstractHandler<T extends Handleable>
-    implements Handler<T>
-{
-    protected AbstractHandler()
-    {
-    }
+@NoArgsConstructor( access = AccessLevel.PROTECTED )
+public abstract class AbstractHandler<T extends Handleable> implements Handler {
+    
+    @Override
+    public abstract void handle(Handleable handleable);
+    
 }

@@ -8,18 +8,20 @@
 package com.tribc.test;
 
 import com.tribc.ddd.domain.event.AbstractEvent;
+import com.tribc.ddd.domain.handling.HandleableId;
 
 /**
  * @author Andr&#233; Juffer, Triacle Biocomputing
  */
-public class CustomerUpdated 
-    extends AbstractEvent
-{
+public class CustomerUpdated extends AbstractEvent {
+    
     private final Long customerId_;
+    
+    public static final HandleableId HANDLEABLE_ID = HandleableId.valueOf(CustomerUpdated.class);
         
     public CustomerUpdated(Long customerId)
     {
-        super(CustomerUpdated.class);
+        super(HANDLEABLE_ID);
         customerId_ = customerId;
     }
     

@@ -8,27 +8,21 @@
 package com.tribc.cqrs.domain.command;
 
 import com.tribc.ddd.domain.handling.AbstractHandleable;
+import com.tribc.ddd.domain.handling.HandleableId;
 import java.time.Instant;
+import lombok.NonNull;
 
 /**
  * Base class for all commands.
  * @author Andr&#233; Juffer, Triacle Biocomputing
  */
-public class AbstractCommand
-    extends AbstractHandleable
-    implements Command
-{
+public class AbstractCommand extends AbstractHandleable implements Command {
+    
     private final Instant issuedOn_;    
     
-    protected AbstractCommand(Class clazz)
+    protected AbstractCommand(@NonNull HandleableId handleableId)
     {
-        super(clazz);
-        issuedOn_ = Instant.now();
-    }
-    
-    protected AbstractCommand(String handleId)
-    {
-        super(handleId);
+        super(handleableId);
         issuedOn_ = Instant.now();
     }
     

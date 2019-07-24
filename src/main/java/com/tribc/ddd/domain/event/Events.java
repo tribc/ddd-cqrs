@@ -22,21 +22,19 @@
  * THE SOFTWARE.
  */
 
-package com.tribc.cqrs.util;
+package com.tribc.ddd.domain.event;
 
-import com.tribc.ddd.domain.event.Event;
 import java.util.Collection;
 import java.util.HashSet;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 /**
- *
+ * Some useful utilities.
  * @author Andr&#233; Juffer, Triacle Biocomputing
  */
-public class EventUtil {
-    
-    private EventUtil()
-    {        
-    }
+@NoArgsConstructor( access = AccessLevel.PRIVATE )
+public class Events {
     
     /**
      * Selects events currently not being handled from a list of events.
@@ -46,7 +44,7 @@ public class EventUtil {
     public static Collection<Event> selectUnhandled(Collection<Event> events)
     {
         Collection<Event> unhandled = new HashSet<>();
-        events.stream().filter((event) -> ( !event.isHandled() || !event.handlingNow() )).forEachOrdered((event) -> {
+        events.stream().filter((event) -> ( !event.isHandled() || !event.isHandledNow() )).forEachOrdered((event) -> {
             unhandled.add(event);
         });
         return unhandled;

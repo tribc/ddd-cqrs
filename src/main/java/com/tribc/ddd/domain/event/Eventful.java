@@ -8,6 +8,7 @@
 package com.tribc.ddd.domain.event;
 
 import java.util.Collection;
+import java.util.stream.Stream;
 
 /**
  * Marks that some entity may raise events.
@@ -21,6 +22,12 @@ public interface Eventful
      * Never null. Must be modifiable to ensure that handlers can change event status.
      */
     Collection<Event> getEvents();
+    
+    /**
+     * Returns an event stream.
+     * @return Event stream.
+     */
+    default Stream<Event> getEventStream() { return this.getEvents().stream(); }
     
     /**
      * Clear entity from all events. Typically called after all 

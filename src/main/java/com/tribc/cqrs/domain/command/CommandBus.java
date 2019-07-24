@@ -7,29 +7,24 @@
 
 package com.tribc.cqrs.domain.command;
 
+import com.tribc.ddd.domain.handling.HandleableId;
 import com.tribc.ddd.domain.handling.MapBus;
+import lombok.NoArgsConstructor;
 
 /**
  * Receives a command and matches it to multiple command handler that subsequently 
  * deal with the command.
  * @author Andr&#233; Juffer, Triacle Biocomputing
  */
-public class CommandBus
-    extends MapBus
-{
-    public CommandBus()
-    {
-        super();
-    }
+@NoArgsConstructor
+public class CommandBus extends MapBus<Command> {
     
     /**
      * Match command to command handler.
-     * @param <C> Command type.
      * @param commandId Unique command type identifier.
      * @param commandHandler Command handler
      */
-    public <C extends Command> 
-    void match(String commandId, CommandHandler<C> commandHandler)
+    public void match(HandleableId commandId, CommandHandler<Command> commandHandler)
     {
         super.match(commandId, commandHandler);
     }

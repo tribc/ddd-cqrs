@@ -11,12 +11,11 @@ import java.time.Instant;
 import com.tribc.ddd.domain.handling.Handleable;
 
 /**
- * Specifies what a client application wants to get done.
+ * Specifies a task.
  * @author  Andr&#233; Juffer, Triacle Biocomputing
  */
-public interface Command 
-    extends Handleable
-{
+public interface Command extends Handleable {
+    
     /**
      * Returns timestamp this command was issued.
      * @return Timestamp.

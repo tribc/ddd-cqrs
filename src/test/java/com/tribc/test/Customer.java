@@ -44,7 +44,7 @@ public class Customer
     public Collection<Event> getEvents() 
     {
         Collection<Event> events = new HashSet<>();
-        events_.stream().filter((event) -> ( !event.isHandled() || !event.handlingNow() )).forEachOrdered((event) -> {
+        events_.stream().filter((event) -> ( !event.isHandled() || !event.isHandledNow() )).forEachOrdered((event) -> {
             events.add(event);
         });
         return events;

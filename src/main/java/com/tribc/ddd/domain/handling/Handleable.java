@@ -19,17 +19,17 @@ public interface Handleable
      * Marks this handleable is now being handled. Thus do not handle 
      * it again.
      */
-    void handling();
+    void nowHandled();
     
     /**
      * Inquires whether this handleable is currently being handled.
-     * @return Result.
+     * @return Result. If true, do not handled it now.
      */
-    boolean handlingNow();
+    boolean isHandledNow();
     
     /**
-     * Marks that this handleable has been dealt with to ensure that it is 
-     * dealt with not more than once.
+     * Marks that this handleable has already been dealt with to ensure to avoid
+     * that it is handled more than once.
      */
     void handled();
     
@@ -49,5 +49,5 @@ public interface Handleable
      * Returns an identifier that uniquely identifies this handleable.
      * @return Identifier.
      */
-    String getHandleableId();
+    HandleableId getHandleableId();
 }

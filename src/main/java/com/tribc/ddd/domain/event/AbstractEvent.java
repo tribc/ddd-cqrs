@@ -8,25 +8,19 @@
 package com.tribc.ddd.domain.event;
 
 import com.tribc.ddd.domain.handling.AbstractHandleable;
+import com.tribc.ddd.domain.handling.HandleableId;
 import java.time.Instant;
+import lombok.NonNull;
 
 /**
  * Base class for all domain events.
  * @author Andr&#233; Juffer, Triacle Biocomputing
  */
-public class AbstractEvent 
-    extends AbstractHandleable
-    implements Event
-{
+public class AbstractEvent extends AbstractHandleable implements Event {
+    
     private final Instant occurredOn_;
     
-    protected AbstractEvent(Class clazz)
-    {
-        super(clazz);
-        occurredOn_ = Instant.now();
-    }
-    
-    protected AbstractEvent(String handleableId)
+    protected AbstractEvent(@NonNull HandleableId handleableId)
     {
         super(handleableId);
         occurredOn_ = Instant.now();

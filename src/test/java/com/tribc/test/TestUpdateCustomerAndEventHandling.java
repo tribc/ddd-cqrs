@@ -6,7 +6,10 @@
 package com.tribc.test;
 
 import com.tribc.cqrs.domain.command.CommandBus;
+import com.tribc.ddd.domain.event.Event;
 import com.tribc.ddd.domain.event.EventBus;
+import com.tribc.ddd.domain.event.EventHandler;
+import com.tribc.ddd.domain.handling.HandleableId;
 
 /**
  *
@@ -26,14 +29,13 @@ public class TestUpdateCustomerAndEventHandling {
         System.out.println("Customer before: " + c);
         
         EventBus eventBus = new EventBus();
+              
         CustomerUpdatedHandler customerUpdatedHandler = new CustomerUpdatedHandler();
+        
         System.out.println("Generic Superclasses of CustomerUpdatedHandler: " + 
                            CustomerUpdatedHandler.class.getGenericSuperclass());
-        eventBus.match(CustomerUpdated.class, customerUpdatedHandler);
-        eventBus.match(CustomerUpdated.class, new Notifier());
-        
-        eventBus.match(SomethingOccurred.class.getName(), 
-                       new SomethingOccuredHandler());
+        eventBus.match(CustomerUpdated.HANDLEABLE_ID, customerUpdatedHandler);
+        eventBus.match(SomethingOccurred.HANDLEABLE_ID, new SomethingOccurredHandler());
         
         CommandBus commandBus = new CommandBus();        
         CustomerFacade customerFacade = new CustomerFacade(commandBus);
@@ -43,12 +45,13 @@ public class TestUpdateCustomerAndEventHandling {
         System.out.println("UpdateCustomer class: " + UpdateCustomer.class);
         System.out.println("Generic Superclasses of UpdateCustomerHandler: " + 
                            updateCustomerHandler.getClass().getGenericSuperclass());
-        commandBus.match(UpdateCustomer.class, updateCustomerHandler);
+        commandBus.match(UpdateCustomer.HANDLEABLE_ID, updateCustomerHandler);
         
         customerFacade.update(c.getCustomerId(), "André Harold Juffer");
         
         Customer updated = customerRepository.forCustomerId(customerId);
         System.out.println("Updated customer: " + updated);
+        
     }
     
 }

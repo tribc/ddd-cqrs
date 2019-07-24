@@ -14,9 +14,8 @@ import com.tribc.ddd.domain.handling.Handleable;
  * Event raised in the domain, a domain event.
  * @author Andr&#233; Juffer, Triacle Biocomputing
  */
-public interface Event 
-    extends Handleable
-{  
+public interface Event extends Handleable {
+    
     /**
      * Returns the timestamp of this event.
      * @return Timestamp.
