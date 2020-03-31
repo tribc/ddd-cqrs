@@ -9,11 +9,13 @@ import com.tribc.ddd.domain.event.Eventful;
 import java.util.Collection;
 import java.util.HashSet;
 import com.tribc.ddd.domain.event.Event;
+import lombok.ToString;
 
 /**
  *
  * @author ajuffer
  */
+@ToString
 public class Customer 
     implements Eventful
 {
@@ -43,11 +45,7 @@ public class Customer
     @Override
     public Collection<Event> getEvents() 
     {
-        Collection<Event> events = new HashSet<>();
-        events_.stream().filter((event) -> ( !event.isHandled() || !event.isHandledNow() )).forEachOrdered((event) -> {
-            events.add(event);
-        });
-        return events;
+        return events_;
     }
 
     @Override
@@ -56,14 +54,4 @@ public class Customer
         events_.clear();
     }
     
-    @Override
-    public String toString()
-    {
-        String newline = System.getProperty("line.separator");
-        StringBuilder s = new StringBuilder("Customer : {").append(newline);
-        s.append("customerId - ").append(customerId_).append(newline);
-        s.append("name - ").append(name_).append(newline);
-        s.append("}");
-        return s.toString();
-    }
 }

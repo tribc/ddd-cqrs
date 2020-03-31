@@ -56,13 +56,13 @@ public class AbstractHandleable implements Handleable
     }
 
     @Override
-    public void nowHandled() 
+    public void ongoing() 
     {
         this.handling = true;
     }
 
     @Override
-    public boolean isHandledNow() 
+    public boolean isOngoing() 
     {
         return this.handling;
     }

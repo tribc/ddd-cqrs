@@ -10,8 +10,7 @@ package com.tribc.ddd.domain.handling;
 import java.util.Collection;
 
 /**
- * Receives Handleables, and matches each Handleable to Handlers that subsequently 
- * deal with them.
+ * Matches Handleables to Handlers who deal with them.
  * @author Andr&#233; Juffer, Triacle Biocomputing
  */
 public interface Bus

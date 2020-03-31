@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2018 Andr&#233; Juffer, Triacle Biocomputing
+ * Copyright 2019 André Juffer, Triacle Biocomputing.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,34 +22,30 @@
  * THE SOFTWARE.
  */
 
-package com.tribc.ddd.domain.event;
+package com.tribc.cqrs.domain.command;
 
-import java.util.Collection;
-import java.util.HashSet;
-import lombok.AccessLevel;
+
+import com.tribc.ddd.domain.handling.HandleableId;
 import lombok.NoArgsConstructor;
+import com.tribc.ddd.domain.handling.MappingReactiveBus;
 
 /**
- * Some useful utilities.
- * @author Andr&#233; Juffer, Triacle Biocomputing
+ *
+ * @author André Juffer, Triacle Biocomputing
+ * @param <R> Result type.
  */
-@NoArgsConstructor( access = AccessLevel.PRIVATE )
-public class Events {
+@NoArgsConstructor
+public class ReactiveCommandBus<R> extends MappingReactiveBus<Command, R> {
     
     /**
-     * Selects unhandled events from a list of events.
-     * @param events Events.
-     * @return Events. May be empty.
+     * Match command to command handler.
+     * @param handleableId Unique command type identifier.
+     * @param commandHandler Command handler.
      */
-    public static Collection<Event> selectUnhandled(Collection<Event> events)
+    public void match(HandleableId handleableId,
+                      ReactiveCommandHandler<Command,R> commandHandler)
     {
-        Collection<Event> unhandled = new HashSet<>();
-        events.stream().filter((event) -> ( !event.isHandled() || !event.isOngoing() )).forEachOrdered((event) -> {
-            unhandled.add(event);
-        });
-        return unhandled;
-        
+        super.match(handleableId, commandHandler);
     }
-    
 
 }

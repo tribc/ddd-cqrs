@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2018 Andr&#233; Juffer, Triacle Biocomputing
+ * Copyright 2019 André Juffer, Triacle Biocomputing.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,34 +22,32 @@
  * THE SOFTWARE.
  */
 
-package com.tribc.ddd.domain.event;
+package com.tribc.ddd.domain.handling;
 
-import java.util.Collection;
-import java.util.HashSet;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import reactor.core.publisher.Flux;
 
 /**
- * Some useful utilities.
- * @author Andr&#233; Juffer, Triacle Biocomputing
+ * Base class for a reactive bus.
+ * @author André Juffer, Triacle Biocomputing
+ * @param <T> Handleable type.
+ * @param <R> Result type.
  */
-@NoArgsConstructor( access = AccessLevel.PRIVATE )
-public class Events {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public abstract class AbstractReactiveBus<T extends Handleable, R> 
+    implements ReactiveBus<R> {
     
     /**
-     * Selects unhandled events from a list of events.
-     * @param events Events.
-     * @return Events. May be empty.
+     * Matches handleable to handler.
+     * @param id Identifier.
+     * @param handler Handler.
      */
-    public static Collection<Event> selectUnhandled(Collection<Event> events)
-    {
-        Collection<Event> unhandled = new HashSet<>();
-        events.stream().filter((event) -> ( !event.isHandled() || !event.isOngoing() )).forEachOrdered((event) -> {
-            unhandled.add(event);
-        });
-        return unhandled;
-        
-    }
-    
+    public abstract void match(@NonNull HandleableId id, 
+                               @NonNull ReactiveHandler<R> handler);
+
+    @Override
+    public abstract Flux<R> handle(Handleable handleable);
 
 }

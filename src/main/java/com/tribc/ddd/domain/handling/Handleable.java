@@ -10,37 +10,35 @@ package com.tribc.ddd.domain.handling;
 import java.time.Instant;
 
 /**
- * Something that is capable of being handled.
+ * Something that is capable of being handled or dealt with.
  * @author Andr&#233; Juffer, Triacle Biocomputing
  */
 public interface Handleable
 {
     /**
-     * Marks this handleable is now being handled. Thus do not handle 
-     * it again.
+     * Marks that this handleable is currently being dealt with.
      */
-    void nowHandled();
+    void ongoing();
     
     /**
-     * Inquires whether this handleable is currently being handled.
-     * @return Result. If true, do not handled it now.
+     * Inquires whether this handleable is currently being dealt with.
+     * @return Result.
      */
-    boolean isHandledNow();
+    boolean isOngoing();
     
     /**
-     * Marks that this handleable has already been dealt with to ensure to avoid
-     * that it is handled more than once.
+     * Marks that this handleable has been dealt with.
      */
     void handled();
     
     /**
-     * Was this handleable already handled?
+     * Was this handleable being dealt with?
      * @return Result.
      */
     boolean isHandled();
     
     /**
-     * Returns timestamp this handleable was handled.
+     * Returns timestamp this handleable was dealt with.
      * @return Timestamp.
      */
     Instant handledOn();

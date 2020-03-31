@@ -6,16 +6,13 @@
 package com.tribc.test;
 
 import com.tribc.cqrs.domain.command.CommandBus;
-import com.tribc.ddd.domain.event.Event;
 import com.tribc.ddd.domain.event.EventBus;
-import com.tribc.ddd.domain.event.EventHandler;
-import com.tribc.ddd.domain.handling.HandleableId;
 
 /**
  *
  * @author ajuffer
  */
-public class TestUpdateCustomerAndEventHandling {
+public class TestHandling {
 
     /**
      * @param args the command line arguments

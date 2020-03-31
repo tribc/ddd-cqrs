@@ -12,6 +12,7 @@ package com.tribc.ddd.domain.handling;
  * @author Andr&#233; Juffer, Triacle Biocomputing
  */
 public interface Handler {
+    
     /**
      * Deals with a handleable
      * @param handleable Handleable

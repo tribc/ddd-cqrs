@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2018 Andr&#233; Juffer, Triacle Biocomputing
+ * Copyright 2019 André Juffer, Triacle Biocomputing.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,34 +22,19 @@
  * THE SOFTWARE.
  */
 
-package com.tribc.ddd.domain.event;
+package com.tribc.cqrs.domain.command;
 
-import java.util.Collection;
-import java.util.HashSet;
+import com.tribc.ddd.domain.handling.AbstractReactiveHandler;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 /**
- * Some useful utilities.
- * @author Andr&#233; Juffer, Triacle Biocomputing
+ * Executes a command issued by the client application.
+ * @author André Juffer, Triacle Biocomputing
+ * @param <C> Command type.
+ * @param <R> Result type.
  */
-@NoArgsConstructor( access = AccessLevel.PRIVATE )
-public class Events {
-    
-    /**
-     * Selects unhandled events from a list of events.
-     * @param events Events.
-     * @return Events. May be empty.
-     */
-    public static Collection<Event> selectUnhandled(Collection<Event> events)
-    {
-        Collection<Event> unhandled = new HashSet<>();
-        events.stream().filter((event) -> ( !event.isHandled() || !event.isOngoing() )).forEachOrdered((event) -> {
-            unhandled.add(event);
-        });
-        return unhandled;
-        
-    }
-    
-
+@NoArgsConstructor( access = AccessLevel.PROTECTED )
+public abstract class ReactiveCommandHandler<C extends Command,R> 
+    extends AbstractReactiveHandler<C,R> {    
 }

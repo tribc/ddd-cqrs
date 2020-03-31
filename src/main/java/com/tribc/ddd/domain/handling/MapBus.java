@@ -53,17 +53,21 @@ public class MapBus<T extends Handleable> extends AbstractBus<T> {
     @Override
     public void handle(@NonNull Handleable handleable) 
     {
-        if ( !handleable.isHandled() && !handleable.isHandledNow() ) {
+        HandleableId handleableId = handleable.getHandleableId();
+        if ( !this.containsHandlerFor(handleableId) ) {
+            throw new IllegalStateException(
+                    handleable.getClass().getName() + 
+                    ": No handler registered for this handleable."
+                );
+        }
+        
+        if ( !handleable.isHandled() && !handleable.isOngoing() ) {
             String id = handleable.getHandleableId().getValue();
              
-            if ( !handlers.containsKey(id) ) {                
-                throw new IllegalStateException(
-                    id + ": No handler registered for this handleable."
-                );
-            }
+            // Mark ongoing handling of handeable.
+            handleable.ongoing();
             
-            // Mark ongoing handling of event.
-            handleable.nowHandled();
+            // Find the handlers. Multiple handlers may exists.
             Set<Handler> hs = this.handlers.get(id);
             hs.forEach((handler) -> {
                 handler.handle(handleable);
@@ -72,6 +76,11 @@ public class MapBus<T extends Handleable> extends AbstractBus<T> {
             // Mark handling is complete.
             handleable.handled();
         }
+    }
+    
+    protected boolean containsHandlerFor(@NonNull HandleableId handleableId)
+    {
+        return this.handlers.containsKey(handleableId.getValue());
     }
 
 }

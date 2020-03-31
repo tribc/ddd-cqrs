@@ -17,7 +17,8 @@ public class CustomerUpdated extends AbstractEvent {
     
     private final Long customerId_;
     
-    public static final HandleableId HANDLEABLE_ID = HandleableId.valueOf(CustomerUpdated.class);
+    public static final HandleableId HANDLEABLE_ID = 
+        HandleableId.valueOf(CustomerUpdated.class);
         
     public CustomerUpdated(Long customerId)
     {

@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2018 Andr&#233; Juffer, Triacle Biocomputing
+ * Copyright 2019 André Juffer, Triacle Biocomputing.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,34 +22,22 @@
  * THE SOFTWARE.
  */
 
-package com.tribc.ddd.domain.event;
+package com.tribc.ddd.domain.handling;
 
-import java.util.Collection;
-import java.util.HashSet;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import reactor.core.publisher.Flux;
 
 /**
- * Some useful utilities.
- * @author Andr&#233; Juffer, Triacle Biocomputing
+ * Matches Handleables to reactive Handlers who deal with them.
+ * @author André Juffer, Triacle Biocomputing
+ * @param <R> Result type.
  */
-@NoArgsConstructor( access = AccessLevel.PRIVATE )
-public class Events {
+public interface ReactiveBus<R> {
     
     /**
-     * Selects unhandled events from a list of events.
-     * @param events Events.
-     * @return Events. May be empty.
+     * Deals with or handles a single Handleable.
+     * @param handleable Handleable.
+     * @return Publisher of results produced by all handlers of handleable.
      */
-    public static Collection<Event> selectUnhandled(Collection<Event> events)
-    {
-        Collection<Event> unhandled = new HashSet<>();
-        events.stream().filter((event) -> ( !event.isHandled() || !event.isOngoing() )).forEachOrdered((event) -> {
-            unhandled.add(event);
-        });
-        return unhandled;
-        
-    }
-    
+    Flux<R> handle(Handleable handleable);
 
 }
