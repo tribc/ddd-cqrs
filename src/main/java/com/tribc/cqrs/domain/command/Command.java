@@ -8,7 +8,7 @@
 package com.tribc.cqrs.domain.command;
 
 import java.time.Instant;
-import com.tribc.ddd.domain.handling.Handleable;
+import com.tribc.cqrs.domain.handleable.Handleable;
 
 /**
  * Specifies a task.

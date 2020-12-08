@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package com.tribc.ddd.domain.handling;
+package com.tribc.ddd.domain.handler;
 
 /**
  * Encapsulates an exception thrown when no handler can be found for a handleable.

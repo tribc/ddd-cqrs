@@ -7,9 +7,10 @@
 
 package com.tribc.cqrs.domain.command;
 
-import com.tribc.ddd.domain.handling.AbstractHandleable;
-import com.tribc.ddd.domain.handling.HandleableId;
 import java.time.Instant;
+
+import com.tribc.cqrs.domain.handleable.AbstractHandleable;
+import com.tribc.cqrs.domain.handleable.HandleableId;
 import lombok.NonNull;
 
 /**

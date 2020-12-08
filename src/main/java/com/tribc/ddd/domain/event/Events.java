@@ -44,11 +44,10 @@ public class Events {
     public static Collection<Event> selectUnhandled(Collection<Event> events)
     {
         Collection<Event> unhandled = new HashSet<>();
-        events.stream().filter((event) -> ( !event.isHandled() || !event.isOngoing() )).forEachOrdered((event) -> {
-            unhandled.add(event);
-        });
+        events.stream()
+                .filter((event) -> ( event.isNotHandled() || !event.isNotOngoing() ))
+                .forEachOrdered(unhandled::add);
         return unhandled;
-        
     }
     
 

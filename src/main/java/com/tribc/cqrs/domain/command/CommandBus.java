@@ -7,9 +7,10 @@
 
 package com.tribc.cqrs.domain.command;
 
-import com.tribc.ddd.domain.handling.HandleableId;
-import com.tribc.ddd.domain.handling.MapBus;
+import com.tribc.cqrs.domain.handleable.HandleableId;
+import com.tribc.ddd.domain.handler.MapBus;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 /**
  * Receives a command and matches it to a command handler that subsequently 
@@ -17,22 +18,16 @@ import lombok.NoArgsConstructor;
  * @author Andr&#233; Juffer, Triacle Biocomputing
  */
 @NoArgsConstructor
-public class CommandBus extends MapBus<Command> {
+public class CommandBus extends MapBus {
     
     /**
      * Match command to command handler. 
      * @param commandId Unique command type identifier.
      * @param commandHandler Command handler
      */
-    public void match(HandleableId commandId, CommandHandler<Command> commandHandler)
+    public void match(@NonNull HandleableId commandId,
+                      CommandHandler<Command> commandHandler)
     {
-        if ( this.containsHandlerFor(commandId) ) {
-            throw new IllegalStateException(
-                commandHandler.getClass().getName() + 
-                ": Another command handler was already matched to command '" + 
-                commandId.getValue() + "'."
-            );
-        }
         super.match(commandId, commandHandler);
     }
 }

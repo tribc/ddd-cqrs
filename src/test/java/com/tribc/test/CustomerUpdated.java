@@ -8,26 +8,24 @@
 package com.tribc.test;
 
 import com.tribc.ddd.domain.event.AbstractEvent;
-import com.tribc.ddd.domain.handling.HandleableId;
+import com.tribc.cqrs.domain.handleable.HandleableId;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NonNull;
 
 /**
  * @author Andr&#233; Juffer, Triacle Biocomputing
  */
 public class CustomerUpdated extends AbstractEvent {
-    
-    private final Long customerId_;
-    
-    public static final HandleableId HANDLEABLE_ID = 
-        HandleableId.valueOf(CustomerUpdated.class);
-        
-    public CustomerUpdated(Long customerId)
-    {
+
+    public static final HandleableId HANDLEABLE_ID = HandleableId.of(CustomerUpdated.class);
+
+    @Getter
+    private final Long customerId;
+
+    public CustomerUpdated(@NonNull Long customerId) {
         super(HANDLEABLE_ID);
-        customerId_ = customerId;
+        this.customerId = customerId;
     }
-    
-    public Long getCustomerId()
-    {
-        return customerId_;
-    }
+
 }

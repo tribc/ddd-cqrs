@@ -7,8 +7,8 @@
 
 package com.tribc.ddd.domain.event;
 
-import com.tribc.ddd.domain.handling.AbstractHandleable;
-import com.tribc.ddd.domain.handling.HandleableId;
+import com.tribc.cqrs.domain.handleable.AbstractHandleable;
+import com.tribc.cqrs.domain.handleable.HandleableId;
 import java.time.Instant;
 import lombok.NonNull;
 

@@ -6,7 +6,7 @@
 package com.tribc.test;
 
 import com.tribc.cqrs.domain.command.AbstractCommand;
-import com.tribc.ddd.domain.handling.HandleableId;
+import com.tribc.cqrs.domain.handleable.HandleableId;
 
 /**
  *
@@ -14,8 +14,7 @@ import com.tribc.ddd.domain.handling.HandleableId;
  */
 public class UpdateCustomer extends AbstractCommand {
     
-    public static final HandleableId HANDLEABLE_ID = 
-        HandleableId.valueOf(UpdateCustomer.class);
+    public static final HandleableId HANDLEABLE_ID = HandleableId.of(UpdateCustomer.class);
     
     private final Long customerId_;
     private final String name_;

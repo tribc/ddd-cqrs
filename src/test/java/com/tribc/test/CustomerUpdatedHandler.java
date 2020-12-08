@@ -6,7 +6,7 @@
 package com.tribc.test;
 
 import com.tribc.ddd.domain.event.EventHandler;
-import com.tribc.ddd.domain.handling.Handleable;
+import com.tribc.cqrs.domain.handleable.Handleable;
 
 /**
  *
@@ -18,20 +18,17 @@ public class CustomerUpdatedHandler extends EventHandler<CustomerUpdated>
     {
         super();
     }
-    
+
     @Override
-    public void handle(Handleable handleable) {
-        this.handle((CustomerUpdated)handleable);
+    public void handle(Handleable event) {
+        this.handle((CustomerUpdated)event);
     }
-    
-    
-    private void handle(CustomerUpdated event) 
-    {
+
+    private void handle(CustomerUpdated event) {
         Long customerId = event.getCustomerId();
-        if ( !event.isHandled() ) {
+        if (event.isNotHandled()) {
             System.out.println("Customer #" + customerId + " updated.");
         }
     }
 
-    
 }

@@ -6,8 +6,9 @@
 package com.tribc.test;
 
 import com.tribc.cqrs.domain.command.CommandHandler;
+import com.tribc.cqrs.domain.handleable.Handleable;
 import com.tribc.ddd.domain.event.EventBus;
-import com.tribc.ddd.domain.handling.Handleable;
+import com.tribc.cqrs.domain.handleable.Handleable;
 
 /**
  *
@@ -24,9 +25,8 @@ public class UpdateCustomerHandler extends CommandHandler<UpdateCustomer>
         customerRepository_ = customerRepository;
         eventBus_ = eventBus;
     }
-    
-   
-    private void handle(UpdateCustomer command) 
+
+    private void handle(UpdateCustomer command)
     {
             Customer customer = 
                 customerRepository_.forCustomerId(command.getCustomerid());
@@ -39,9 +39,7 @@ public class UpdateCustomerHandler extends CommandHandler<UpdateCustomer>
     }
 
     @Override
-    public void handle(Handleable handleable) 
-    {
-        this.handle((UpdateCustomer)handleable);
+    public void handle(Handleable command) {
+        this.handle((UpdateCustomer)command);
     }
-    
 }

@@ -7,7 +7,7 @@
 package com.tribc.test;
 
 import com.tribc.ddd.domain.event.AbstractEvent;
-import com.tribc.ddd.domain.handling.HandleableId;
+import com.tribc.cqrs.domain.handleable.HandleableId;
 
 /**
  *
@@ -15,8 +15,7 @@ import com.tribc.ddd.domain.handling.HandleableId;
  */
 public class SomethingOccurred extends AbstractEvent {
 
-    public static final HandleableId HANDLEABLE_ID = 
-        HandleableId.valueOf(SomethingOccurred.class);
+    public static final HandleableId HANDLEABLE_ID = HandleableId.of(SomethingOccurred.class);
     
     private final Long customerId_;
     

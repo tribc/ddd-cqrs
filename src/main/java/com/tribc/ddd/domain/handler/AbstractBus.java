@@ -5,9 +5,13 @@
  * permission of Triacle Biocomputing is prohibited.
  */
 
-package com.tribc.ddd.domain.handling;
+package com.tribc.ddd.domain.handler;
 
+import com.tribc.cqrs.domain.handleable.HandleableId;
+import com.tribc.cqrs.domain.handleable.Handleable;
 import java.util.Collection;
+
+import com.tribc.cqrs.domain.handleable.Handleable;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -15,25 +19,25 @@ import lombok.NonNull;
 /**
  * Base class for a bus.
  * @author Andr&#233; Juffer, Triacle Biocomputing
- * @param <T> Handleable type.
  */
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class AbstractBus<T extends Handleable> implements Bus {
+public abstract class AbstractBus implements Bus {
     
     /**
-     * Matches handleable to handler.
-     * @param id Identifier.
+     * Matches a handleable to a handler.
+     * @param handleableId Identifier.
      * @param handler Handler.
      */
-    public abstract void match(@NonNull HandleableId id, @NonNull Handler handler);
+    public abstract void match(@NonNull HandleableId handleableId, 
+                               @NonNull Handler handler);
     
     @Override
     public abstract void handle(@NonNull Handleable handleable);
     
     @Override
-    public void handle(@NonNull Collection<? extends Handleable> handleables)
+    public void handle(@NonNull Collection<Handleable> handleables)
     {
-        handleables.forEach(handleable -> this.handle(handleable));
+        handleables.forEach(this::handle);
     }
     
 }

@@ -5,7 +5,9 @@
  * permission of Triacle Biocomputing is prohibited.
  */
 
-package com.tribc.ddd.domain.handling;
+package com.tribc.ddd.domain.handler;
+
+import com.tribc.cqrs.domain.handleable.Handleable;
 
 /**
  * Deals with or manages/handles a Handleable.

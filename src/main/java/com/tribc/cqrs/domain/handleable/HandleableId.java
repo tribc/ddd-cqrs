@@ -22,30 +22,31 @@
  * THE SOFTWARE.
  */
 
-package com.tribc.ddd.domain.handling;
+package com.tribc.cqrs.domain.handleable;
 
 import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.Value;
 
 /**
  * Uniquely identifies an Handleable.
  * @author André Juffer, Triacle Biocomputing
  */
+@Value
 @AllArgsConstructor( access = AccessLevel.PRIVATE )
 public class HandleableId {
     
-    @Getter
-    private final String value;
+    String value;
     
     /**
-     * Create an identifier from a class name.
+     * Creates an identifier for a given class.
      * @param clazz Class.
      * @return Identifier.
      */
-    public static HandleableId valueOf(@NonNull Class<?> clazz)
+    public static HandleableId of(@NonNull Class<?> clazz)
     {
         return new HandleableId(clazz.getName());
     }
@@ -54,11 +55,15 @@ public class HandleableId {
      * Creates an identifier from a given non-empty value.
      * @param value Value.
      * @return Identifier.
+     * @deprecated 
      */
-    public static HandleableId valueOf(@NonNull String value)
+    @Deprecated
+    public static HandleableId of(@NonNull String value)
     {
         if ( value.isEmpty() ) {
-            throw new IllegalArgumentException("HandleableId: value must not be empty.");
+            throw new IllegalArgumentException(
+                "HandleableId: value must not be empty."
+            );
         }
         return new HandleableId(value);
     }
@@ -66,7 +71,9 @@ public class HandleableId {
     /**
      * Generates an identifier.
      * @return Identifier.
+     * @deprecated
      */
+    @Deprecated
     public static HandleableId generate()
     {
         return new HandleableId(UUID.randomUUID().toString());

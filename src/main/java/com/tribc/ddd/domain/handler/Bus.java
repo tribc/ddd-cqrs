@@ -5,7 +5,10 @@
  * permission of Triacle Biocomputing is prohibited.
  */
 
-package com.tribc.ddd.domain.handling;
+package com.tribc.ddd.domain.handler;
+
+import com.tribc.cqrs.domain.handleable.Handleable;
+import lombok.NonNull;
 
 import java.util.Collection;
 
@@ -19,11 +22,11 @@ public interface Bus
      * Deals with or handles a single Handleable.
      * @param handleable Handleable.
      */
-    void handle(Handleable handleable);
+    void handle(@NonNull Handleable handleable);
     
     /**
      * Handles multiple Handleables.
      * @param handleables Handleable collection.
      */
-    void handle(Collection<? extends Handleable> handleables);
+    void handle(@NonNull Collection<Handleable> handleables);
 }

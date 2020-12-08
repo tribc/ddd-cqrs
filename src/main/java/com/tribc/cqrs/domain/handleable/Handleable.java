@@ -5,7 +5,7 @@
  * permission of Triacle Biocomputing is prohibited.
  */
 
-package com.tribc.ddd.domain.handling;
+package com.tribc.cqrs.domain.handleable;
 
 import java.time.Instant;
 
@@ -13,29 +13,29 @@ import java.time.Instant;
  * Something that is capable of being handled or dealt with.
  * @author Andr&#233; Juffer, Triacle Biocomputing
  */
-public interface Handleable
-{
-    /**
-     * Marks that this handleable is currently being dealt with.
-     */
-    void ongoing();
+public interface Handleable {
     
     /**
-     * Inquires whether this handleable is currently being dealt with.
+     * Marks that this handleable is being dealt with right now.
+     */
+    void markOngoing();
+    
+    /**
+     * Is this handleable currently being dealt with?
      * @return Result.
      */
-    boolean isOngoing();
+    boolean isNotOngoing();
     
     /**
      * Marks that this handleable has been dealt with.
      */
-    void handled();
+    void markHandled();
     
     /**
-     * Was this handleable being dealt with?
+     * Was this handleable already being dealt with?
      * @return Result.
      */
-    boolean isHandled();
+    boolean isNotHandled();
     
     /**
      * Returns timestamp this handleable was dealt with.

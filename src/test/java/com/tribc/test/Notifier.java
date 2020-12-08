@@ -24,7 +24,7 @@
 package com.tribc.test;
 
 import com.tribc.ddd.domain.event.EventHandler;
-import com.tribc.ddd.domain.handling.Handleable;
+import com.tribc.cqrs.domain.handleable.Handleable;
 
 /**
  *
@@ -36,8 +36,8 @@ public class Notifier extends EventHandler<CustomerUpdated> {
     {
         super();
     }
-    
-    private void handle(CustomerUpdated handleable) 
+
+    private void handle(CustomerUpdated handleable)
     {
         Long customerId = handleable.getCustomerId();
         System.out.println("NOTICE: Customer #" + customerId + " has updated customer information.");
@@ -48,5 +48,4 @@ public class Notifier extends EventHandler<CustomerUpdated> {
     {
         this.handle((CustomerUpdated)handleable);
     }
-    
 }

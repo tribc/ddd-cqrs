@@ -7,15 +7,16 @@
 
 package com.tribc.ddd.domain.event;
 
-import com.tribc.ddd.domain.handling.AbstractHandler;
+import com.tribc.ddd.domain.handler.Handler;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 /**
- * Handles events.
+ * Handles events raised somewhere. Base class for all event handlers.
  * @author Andr&#233; Juffer, Triacle Biocomputing
  * @param <E> Event type.
  */
 @NoArgsConstructor( access = AccessLevel.PROTECTED )
-public abstract class EventHandler<E extends Event> extends AbstractHandler<E> {
+public abstract class EventHandler<E extends Event> implements Handler {
+
 }

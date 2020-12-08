@@ -7,10 +7,11 @@
 
 package com.tribc.ddd.domain.event;
 
-import com.tribc.ddd.domain.handling.HandleableId;
-import com.tribc.ddd.domain.handling.MapBus;
-import java.util.Collection;
+import com.tribc.cqrs.domain.handleable.HandleableId;
+import com.tribc.ddd.domain.handler.MapBus;
 import lombok.NoArgsConstructor;
+
+import java.util.Collection;
 
 /**
  * Receives an event and matches event handlers to it that subsequently 
@@ -18,14 +19,15 @@ import lombok.NoArgsConstructor;
  * @author Andr&#233; Juffer, Triacle Biocomputing.
  */
 @NoArgsConstructor
-public class EventBus extends MapBus<Event> {
+public class EventBus extends MapBus {
     
     /**
      * Matches event to event handler.
      * @param eventId Unique event type identifier.
-     * @param eventHandler Command handler
+     * @param eventHandler Event handler
      */
-    public void match(HandleableId eventId, EventHandler<Event> eventHandler)
+    public void match(HandleableId eventId, 
+                      EventHandler<Event> eventHandler)
     {        
         super.match(eventId, eventHandler);
     }
@@ -38,7 +40,7 @@ public class EventBus extends MapBus<Event> {
     public void handle(Eventful eventful)
     {
         Collection<Event> events = Events.selectUnhandled(eventful.getEvents());
-        this.handle(events);
+        events.forEach(this::handle);
         eventful.clearEvents();
     }
     
@@ -50,9 +52,7 @@ public class EventBus extends MapBus<Event> {
      */
     public void handleAsync(Eventful eventful)
     {
-        Runnable r = () -> {
-            this.handle(eventful);
-        };
+        Runnable r = () -> this.handle(eventful);
         Thread t = new Thread(r);
         t.start();
     }

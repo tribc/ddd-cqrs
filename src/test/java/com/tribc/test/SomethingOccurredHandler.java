@@ -6,28 +6,26 @@
  */
 package com.tribc.test;
 
+import com.tribc.cqrs.domain.handleable.Handleable;
 import com.tribc.ddd.domain.event.EventHandler;
-import com.tribc.ddd.domain.handling.Handleable;
 
 /**
- *
  * @author Andr&#233; Juffer, Triacle Biocomputing
  */
-public class SomethingOccurredHandler 
-    extends EventHandler<SomethingOccurred>
-{
-    public SomethingOccurredHandler()
-    {        
-    }
-    
-    @Override
-    public void handle(Handleable handleable) {
-        this.handle((SomethingOccurred)handleable);
-    }
-    
-    private void handle(SomethingOccurred event) 
-    {
-        System.out.println("Something occured with customer #" + event.getCustomerId());        
+public class SomethingOccurredHandler extends EventHandler<SomethingOccurred> {
+
+    public SomethingOccurredHandler() {
     }
 
- }
+
+    @Override
+    public void handle(Handleable event) {
+        this.handle((SomethingOccurred) event);
+    }
+
+
+    private void handle(SomethingOccurred event) {
+        System.out.println("Something occured with customer #" + event.getCustomerId());
+    }
+
+}

@@ -8,7 +8,7 @@
 package com.tribc.ddd.domain.event;
 
 import java.time.Instant;
-import com.tribc.ddd.domain.handling.Handleable;
+import com.tribc.cqrs.domain.handleable.Handleable;
 
 /**
  * Event raised in the domain, a domain event.

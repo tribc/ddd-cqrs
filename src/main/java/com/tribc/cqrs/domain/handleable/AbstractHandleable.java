@@ -5,7 +5,7 @@
  * permission of Triacle Biocomputing is prohibited.
  */
 
-package com.tribc.ddd.domain.handling;
+package com.tribc.cqrs.domain.handleable;
 
 import java.time.Instant;
 import lombok.AccessLevel;
@@ -13,7 +13,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Base class for an actual handleable.
+ * Base class for an handleable.
  * @author Andr&#233; Juffer, Triacle Biocomputing
  */
 public class AbstractHandleable implements Handleable
@@ -36,7 +36,7 @@ public class AbstractHandleable implements Handleable
     }
     
     @Override
-    public void handled() 
+    public void markHandled() 
     {
         this.handled = true;
         this.handling = false;
@@ -44,9 +44,9 @@ public class AbstractHandleable implements Handleable
     }
 
     @Override
-    public boolean isHandled() 
+    public boolean isNotHandled()
     {
-        return this.handled;
+        return !this.handled;
     }
     
     @Override
@@ -56,13 +56,13 @@ public class AbstractHandleable implements Handleable
     }
 
     @Override
-    public void ongoing() 
+    public void markOngoing()
     {
         this.handling = true;
     }
 
     @Override
-    public boolean isOngoing() 
+    public boolean isNotOngoing()
     {
         return this.handling;
     }
