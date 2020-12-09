@@ -7,17 +7,20 @@
 
 package com.tribc.cqrs.domain.command;
 
-import java.time.Instant;
 import com.tribc.cqrs.domain.handleable.Handleable;
+
+import java.time.Instant;
 
 /**
  * Specifies a task.
- * @author  Andr&#233; Juffer, Triacle Biocomputing
+ *
+ * @author Andr&#233; Juffer, Triacle Biocomputing
  */
 public interface Command extends Handleable {
-    
+
     /**
      * Returns timestamp this command was issued.
+     *
      * @return Timestamp.
      */
     Instant issuedOn();

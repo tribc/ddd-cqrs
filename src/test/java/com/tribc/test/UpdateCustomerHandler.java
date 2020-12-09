@@ -6,40 +6,27 @@
 package com.tribc.test;
 
 import com.tribc.cqrs.domain.command.CommandHandler;
-import com.tribc.cqrs.domain.handleable.Handleable;
-import com.tribc.ddd.domain.event.EventBus;
-import com.tribc.cqrs.domain.handleable.Handleable;
+import com.tribc.ddd.domain.event.QueueEventBus;
 
 /**
- *
  * @author ajuffer
  */
-public class UpdateCustomerHandler extends CommandHandler<UpdateCustomer>
-{
-    private final CustomerRepository customerRepository_;
-    private final EventBus eventBus_;
-    
-    public UpdateCustomerHandler(CustomerRepository customerRepository,
-                                 EventBus eventBus)
-    {        
-        customerRepository_ = customerRepository;
-        eventBus_ = eventBus;
-    }
+public class UpdateCustomerHandler extends CommandHandler<UpdateCustomer> {
+    private final CustomerRepository customerRepository;
+    private QueueEventBus eventBus;
 
-    private void handle(UpdateCustomer command)
-    {
-            Customer customer = 
-                customerRepository_.forCustomerId(command.getCustomerid());
-            customer.updateName(command.getName());
-            customerRepository_.update(customer);
-            
-            //eventBus_.handleAsync(customer);
-            eventBus_.handle(customer);
-           
+    public UpdateCustomerHandler(CustomerRepository customerRepository, QueueEventBus eventBus) {
+        this.customerRepository = customerRepository;
+        this.eventBus = eventBus;
     }
 
     @Override
-    public void handle(Handleable command) {
-        this.handle((UpdateCustomer)command);
+    public void handle(UpdateCustomer command) {
+        Customer customer = this.customerRepository.forCustomerId(command.getCustomerid());
+        customer.updateName(command.getName());
+        this.customerRepository.update(customer);
+        this.eventBus.add(customer);
+        System.out.println("UpdateCustomerHandler: EventBus has events? Result: " + this.eventBus.hasEvents());
     }
+
 }

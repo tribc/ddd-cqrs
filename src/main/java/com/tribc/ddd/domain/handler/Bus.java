@@ -14,18 +14,20 @@ import java.util.Collection;
 
 /**
  * Matches Handleables to Handlers who deal with them.
+ *
  * @author Andr&#233; Juffer, Triacle Biocomputing
  */
-public interface Bus
-{
+public interface Bus {
     /**
      * Deals with or handles a single Handleable.
+     *
      * @param handleable Handleable.
      */
     void handle(@NonNull Handleable handleable);
-    
+
     /**
      * Handles multiple Handleables.
+     *
      * @param handleables Handleable collection.
      */
     void handle(@NonNull Collection<Handleable> handleables);

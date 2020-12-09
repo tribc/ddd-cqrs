@@ -19,14 +19,17 @@ public class CustomerUpdatedHandler extends EventHandler<CustomerUpdated>
         super();
     }
 
+    /*
     @Override
     public void handle(Handleable event) {
         this.handle((CustomerUpdated)event);
-    }
+    }*/
 
-    private void handle(CustomerUpdated event) {
+    @Override
+    public void handle(CustomerUpdated event) {
         Long customerId = event.getCustomerId();
         if (event.isNotHandled()) {
+            System.out.println(CustomerUpdatedHandler.class.getName() + ":");
             System.out.println("Customer #" + customerId + " updated.");
         }
     }

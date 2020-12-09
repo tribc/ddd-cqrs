@@ -9,7 +9,6 @@ package com.tribc.test;
 
 import com.tribc.ddd.domain.event.AbstractEvent;
 import com.tribc.cqrs.domain.handleable.HandleableId;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
 

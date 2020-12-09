@@ -28,48 +28,55 @@ import java.util.List;
 
 /**
  * Holds entities of type T.
- * @author Andr&#233; H. Juffer, Biocenter Oulu
- * @param <T> Entity type.
+ *
+ * @param <T>  Entity type.
  * @param <ID> Entity identifier type.
+ * @author Andr&#233; H. Juffer, Biocenter Oulu
  */
-public interface Repository<T,ID> {
-    
+public interface Repository<T, ID> {
+
     /**
      * Adds new entity
+     *
      * @param t Entity.
      */
     void add(T t);
-    
+
     /**
      * Updates existing entity.
+     *
      * @param t Entity.
      */
     void update(T t);
-    
+
     /**
      * Removes existing entity.
+     *
      * @param t Entity.
      */
     void remove(T t);
-    
+
     /**
      * Returns entity with given identifier.
+     *
      * @param identifier Identifier.
      * @return Entity.
      */
-    public T forOne(ID identifier);
-    
+    T forOne(ID identifier);
+
     /**
      * Returns all entities in the repository.
+     *
      * @return Entities. May be empty.
      */
-    public List<T> forAll();    
-    
+    List<T> forAll();
+
     /**
      * Inquires whether this repository holds an entity with given identifier.
+     *
      * @param identifier Identifier.
      * @return Result.
      */
     boolean contains(ID identifier);
-    
+
 }

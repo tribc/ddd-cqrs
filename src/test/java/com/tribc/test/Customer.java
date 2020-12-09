@@ -16,8 +16,7 @@ import lombok.ToString;
  * @author ajuffer
  */
 @ToString
-public class Customer 
-    implements Eventful
+public class Customer implements Eventful
 {
     private final Long customerId_;
     private String name_;

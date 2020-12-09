@@ -11,12 +11,14 @@ import com.tribc.cqrs.domain.handleable.Handleable;
 
 /**
  * Deals with or manages/handles a Handleable.
+ *
  * @author Andr&#233; Juffer, Triacle Biocomputing
  */
 public interface Handler {
-    
+
     /**
      * Deals with a handleable
+     *
      * @param handleable Handleable
      */
     void handle(Handleable handleable);

@@ -24,31 +24,33 @@
 
 package com.tribc.ddd.domain.event;
 
-import java.util.Collection;
-import java.util.HashSet;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
+import java.util.Collection;
+import java.util.HashSet;
+
 /**
  * Some useful utilities.
+ *
  * @author Andr&#233; Juffer, Triacle Biocomputing
  */
-@NoArgsConstructor( access = AccessLevel.PRIVATE )
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Events {
-    
+
     /**
      * Selects unhandled events from a list of events.
+     *
      * @param events Events.
      * @return Events. May be empty.
      */
-    public static Collection<Event> selectUnhandled(Collection<Event> events)
-    {
+    public static Collection<Event> selectUnhandled(Collection<Event> events) {
         Collection<Event> unhandled = new HashSet<>();
         events.stream()
-                .filter((event) -> ( event.isNotHandled() || !event.isNotOngoing() ))
+                .filter((event) -> (event.isNotHandled() || !event.isNotOngoing()))
                 .forEachOrdered(unhandled::add);
         return unhandled;
     }
-    
+
 
 }

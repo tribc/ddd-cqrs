@@ -26,44 +26,43 @@ package com.tribc.ddd.domain.handler;
 
 /**
  * Encapsulates an exception thrown when no handler can be found for a handleable.
+ *
  * @author Andr&#233; Juffer, Triacle Biocomputing
  */
-public class NoHandlerException 
-        extends RuntimeException 
-{
+public class NoHandlerException
+        extends RuntimeException {
     /**
      * Creates new exception.
      */
-    public NoHandlerException()
-    {
+    public NoHandlerException() {
         super();
     }
-    
+
     /**
      * Creates new exception.
+     *
      * @param throwable Cause.
      */
-    public NoHandlerException(Throwable throwable)
-    {
+    public NoHandlerException(Throwable throwable) {
         super(throwable);
     }
-    
+
     /**
      * Creates new exception.
+     *
      * @param message Message explaining reason for throwing this exception.
      */
-    public NoHandlerException (String message)
-    {
+    public NoHandlerException(String message) {
         super(message);
     }
-    
+
     /**
      * Creates new exception
-     * @param message Message explaining reason for throwing this exception.
+     *
+     * @param message   Message explaining reason for throwing this exception.
      * @param throwable Cause.
      */
-    public NoHandlerException(String message, Throwable throwable)
-    {
+    public NoHandlerException(String message, Throwable throwable) {
         super(message, throwable);
     }
 }

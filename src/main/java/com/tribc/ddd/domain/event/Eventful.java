@@ -12,25 +12,29 @@ import java.util.stream.Stream;
 
 /**
  * Marks that some entity may raise events.
+ *
  * @author Andr&#233; Juffer, Triacle Biocomputing
  */
-public interface Eventful 
-{
+public interface Eventful {
     /**
      * Returns all raised events.
-     * @return Domain events that have not been handled as of yet. May be empty. 
+     *
+     * @return Domain events that have not been handled as of yet. May be empty.
      * Never null. Must be modifiable to ensure that handlers can change event status.
      */
     Collection<Event> getEvents();
-    
+
     /**
      * Returns an event stream.
+     *
      * @return Event stream.
      */
-    default Stream<Event> getEventStream() { return this.getEvents().stream(); }
-    
+    default Stream<Event> getEventStream() {
+        return this.getEvents().stream();
+    }
+
     /**
-     * Clear entity from all events. Typically called after all 
+     * Clear entity from all events. Typically called after all
      * events have been handled.
      */
     void clearEvents();

@@ -14,17 +14,9 @@ import com.tribc.ddd.domain.event.EventHandler;
  */
 public class SomethingOccurredHandler extends EventHandler<SomethingOccurred> {
 
-    public SomethingOccurredHandler() {
-    }
-
-
     @Override
-    public void handle(Handleable event) {
-        this.handle((SomethingOccurred) event);
-    }
-
-
-    private void handle(SomethingOccurred event) {
+    public void handle(SomethingOccurred event) {
+        System.out.println(SomethingOccurredHandler.class.getName() + ":");
         System.out.println("Something occured with customer #" + event.getCustomerId());
     }
 

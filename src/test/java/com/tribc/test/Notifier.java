@@ -37,15 +37,17 @@ public class Notifier extends EventHandler<CustomerUpdated> {
         super();
     }
 
-    private void handle(CustomerUpdated handleable)
+    @Override
+    public void handle(CustomerUpdated event)
     {
-        Long customerId = handleable.getCustomerId();
+        Long customerId = event.getCustomerId();
         System.out.println("NOTICE: Customer #" + customerId + " has updated customer information.");
     }
 
-    @Override
-    public void handle(Handleable handleable) 
+    //@Override
+    /*public void handle(Handleable handleable)
     {
         this.handle((CustomerUpdated)handleable);
-    }
+    }*/
 }
+

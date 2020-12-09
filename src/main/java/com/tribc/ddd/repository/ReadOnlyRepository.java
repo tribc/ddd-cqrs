@@ -30,22 +30,25 @@ import java.util.List;
 /**
  * Holds entities of type T. One can read from the repository. Updating existing
  * or adding new entities is not possible.
- * @author Andr&#233; H. Juffer, Biocenter Oulu
- * @param <T> Entity type.
+ *
+ * @param <T>  Entity type.
  * @param <ID> Entity identifier type.
+ * @author Andr&#233; H. Juffer, Biocenter Oulu
  */
-public interface ReadOnlyRepository<T,ID> {
-    
+public interface ReadOnlyRepository<T, ID> {
+
     /**
      * Queries for entity with given identifier.
+     *
      * @param identifier Entity identifier.
      * @return Entity.
      * @throws NullPointerException if nonexistent.
      */
     T getOne(ID identifier);
-    
+
     /**
      * Returns all entities.
+     *
      * @return All entities. May be empty.
      */
     List<T> getAll();
