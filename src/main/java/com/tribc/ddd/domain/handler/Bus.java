@@ -13,11 +13,12 @@ import lombok.NonNull;
 import java.util.Collection;
 
 /**
- * Matches Handleables to Handlers who deal with them.
+ * Matches Handleable to Handlers who deal with them.
  *
  * @author Andr&#233; Juffer, Triacle Biocomputing
  */
 public interface Bus {
+
     /**
      * Deals with or handles a single Handleable.
      *

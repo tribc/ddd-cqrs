@@ -19,6 +19,7 @@ import java.time.Instant;
  * @author Andr&#233; Juffer, Triacle Biocomputing
  */
 public class AbstractHandleable implements Handleable {
+
     @Getter
     private final HandleableId handleableId;
 

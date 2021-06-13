@@ -34,7 +34,7 @@ public abstract class MapBus extends AbstractBus {
     }
 
     /**
-     * All handlers for each handeable.
+     * All handlers for each handleable.
      *
      * @return Unmodifiable map.
      */
