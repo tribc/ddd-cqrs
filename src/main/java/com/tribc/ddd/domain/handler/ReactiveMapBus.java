@@ -45,12 +45,12 @@ public class ReactiveMapBus extends ReactiveAbstractBus {
 
     @Override
     public Mono<Handleable> manage(Handleable handleable) {
-        if ( !this.containsHandlerFor(handleable)) {
+        if (!this.containsHandlerFor(handleable)) {
             return Mono.error(
                     new IllegalArgumentException(handleable.getHandleableId().getValue() +
                             ": No handler registered for this handleable."));
         }
-        if ( handleable.isNotHandled() ) {
+        if (handleable.isNotHandled()) {
             return Mono.just(handleable)
                     .map(h -> {
                         h.markOngoing();
@@ -62,13 +62,15 @@ public class ReactiveMapBus extends ReactiveAbstractBus {
                     .map(h -> {
                         h.markHandled();
                         return h;
-                    });
+                    })
+                    .log();
+        } else {
+            logger.warn(
+                    handleable.getHandleableId() +
+                            ": This handleable is skipped as it was already handled."
+            );
+            return Mono.just(handleable);
         }
-        logger.warn(
-                handleable.getHandleableId() +
-                   ": This handleable is skipped as it was already handled."
-        );
-        return Mono.just(handleable);
     }
 
     /**
@@ -81,6 +83,10 @@ public class ReactiveMapBus extends ReactiveAbstractBus {
 
     protected boolean containsHandlerFor(@NonNull Handleable handleable) {
         return this.handlers.containsKey(handleable.getHandleableId());
+    }
+
+    private Handleable handle(@NonNull Handleable handleable, @NonNull ReactiveHandler handler) {
+        return handle(handleable);
     }
 
 }
