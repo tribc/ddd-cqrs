@@ -9,7 +9,7 @@ import reactor.core.publisher.Mono;
 import java.util.Collection;
 
 /**
- * Simple reactive queue-based event bus.
+ * Simple reactive event bus.
  */
 public class ReactiveEventBus extends ReactiveMapBus {
 

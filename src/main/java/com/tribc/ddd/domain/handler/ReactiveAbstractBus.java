@@ -33,7 +33,7 @@ public abstract class ReactiveAbstractBus implements ReactiveBus {
 
     @Override
     public Flux<Handleable> handle(@NonNull Collection<Handleable> handleables) {
-        return Flux.fromIterable(handleables).map(h -> this.handle(h));
+        return Flux.fromIterable(handleables).map(this::handle);
     }
 
 }
