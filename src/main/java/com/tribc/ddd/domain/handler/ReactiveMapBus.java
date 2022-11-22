@@ -3,16 +3,13 @@ package com.tribc.ddd.domain.handler;
 import com.tribc.cqrs.domain.handleable.Handleable;
 import com.tribc.cqrs.domain.handleable.HandleableId;
 import lombok.NonNull;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import reactor.core.publisher.Flux;
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
 import java.util.*;
 
+@Slf4j
 public class ReactiveMapBus extends ReactiveAbstractBus {
-
-    private static final Logger logger = LogManager.getLogger(ReactiveMapBus.class.getName());
 
     // Key is the handleable identifier. Value are the handlers for the handleable.
     private final Map<HandleableId, Set<ReactiveHandler>> handlers;
@@ -43,41 +40,40 @@ public class ReactiveMapBus extends ReactiveAbstractBus {
 
     }
 
+    /**
+     * Handles the handleable if it is not yet handled.
+     * @param handleable Handleable.
+     * @return Handled handleable.
+     * @throws MissingHandlerException if no handler exists for the given handleable.
+     */
     @Override
     public Mono<Handleable> manage(Handleable handleable) {
-        if (!this.containsHandlerFor(handleable)) {
-            return Mono.error(
-                    new IllegalArgumentException(handleable.getHandleableId().getValue() +
-                            ": No handler registered for this handleable."));
-        }
-        if (handleable.isNotHandled()) {
-            return Mono.just(handleable)
-                    .map(h -> {
-                        h.markOngoing();
-                        return h;
-                    })
-                    .flatMapIterable(h -> this.handlers.get(h.getHandleableId()))
-                    .flatMap(hdl -> hdl.handle(handleable))
-                    .last()
-                    .map(h -> {
-                        h.markHandled();
-                        return h;
-                    })
-                    .log();
-        } else {
-            logger.warn(
-                    handleable.getHandleableId() +
-                            ": This handleable is skipped as it was already handled."
-            );
-            return Mono.just(handleable);
-        }
+        log.trace("manage()");
+        return Mono.just(handleable)
+                .log()
+                .filter(h -> !h.isHandled())
+                .map(h -> {
+                    if (!this.containsHandlerFor(h)) {
+                        throw new MissingHandlerException(h.getHandleableId().getValue() + ": Handleable");
+                    }
+                    h.markOngoing();
+                    return h;
+                })
+                .flatMapIterable(h -> this.handlers.get(h.getHandleableId()))
+                .flatMap(hdl -> hdl.handle(handleable))
+                .last()
+                .map(h -> {
+                    h.markHandled();
+                    return h;
+                });
     }
 
     /**
-     * Blocking.
+     * Blocking. Not entirely reactive....
      */
     @Override
     public Handleable handle(@NonNull Handleable handleable) {
+        log.trace("handle(Handleable handleable)");
         return this.manage(handleable).block();
     }
 
@@ -86,6 +82,7 @@ public class ReactiveMapBus extends ReactiveAbstractBus {
     }
 
     private Handleable handle(@NonNull Handleable handleable, @NonNull ReactiveHandler handler) {
+        log.trace("handle(Handleable handleable, ReactiveHandler handler)");
         return handle(handleable);
     }
 

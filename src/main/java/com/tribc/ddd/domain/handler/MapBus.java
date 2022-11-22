@@ -1,34 +1,24 @@
-/*
- * Copyright (c) Triacle Biocomputing. All rights reserved.
- * All information contained herein is proprietary and confidential to Triacle
- * Biocomputing.  Any use, reproduction, or disclosure without the written
- * permission of Triacle Biocomputing is prohibited.
- */
-
 package com.tribc.ddd.domain.handler;
 
 import com.tribc.cqrs.domain.handleable.Handleable;
 import com.tribc.cqrs.domain.handleable.HandleableId;
 import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * A simple implementation that uses a map to match a handle with multiple handlers.
  * A handleable identifier serves as the key to link handlers to the handleable.
- *
- * @author Andr&#233; Juffer, Triacle Biocomputing
  */
+@Slf4j
 public abstract class MapBus extends AbstractBus {
 
-    private static final Logger logger = Logger.getLogger(MapBus.class.getName());
-
-    // Key is the handleable identifier. Value are the handlers for the handleable.
+    // Key is the handleable identifier.
+    // Value are the handlers for the handleable.
     private final Map<HandleableId, Set<Handler>> handlers;
 
-    public MapBus() {
+    protected MapBus() {
         super();
         this.handlers = new HashMap<>();
     }
@@ -44,6 +34,7 @@ public abstract class MapBus extends AbstractBus {
 
     public void match(@NonNull HandleableId handleableId,
                       @NonNull Handler handler) {
+        log.trace("match()");
         if (this.handlers.containsKey(handleableId)) {
             Set<Handler> hs = this.handlers.get(handleableId);
             hs.add(handler);
@@ -55,36 +46,41 @@ public abstract class MapBus extends AbstractBus {
     }
 
     /**
-     * Handles or deals with a handleable.After handling, the handleable is notified that it
-     * has been dealt with.
+     * Handles a handleable sequentially. After handling, the handleable is notified that
+     * it was handled.
      *
      * @param handleable Handleable.
+     * @throws MissingHandlerException if no handler exists for the given handleable.
      */
     public void handle(@NonNull Handleable handleable) {
+        log.trace("handle()");
         HandleableId handleableId = handleable.getHandleableId();
         if (!this.containsHandlerFor(handleable)) {
-            throw new IllegalArgumentException(
-                    handleable.getHandleableId().getValue() +
-                            ": No handler registered for this handleable."
+            throw new MissingHandlerException(
+                handleable.getHandleableId().getValue() + ": Handleable."
             );
         }
 
-        if (handleable.isNotHandled()) {
-
-            // Mark ongoing handling of handeable.
+        if (!handleable.isHandled()) {
+            // Mark handleable as ongoing.
             handleable.markOngoing();
 
-            // Find the handeable's handlers. Multiple handlers may exists.
+            // Find the handleable's handlers. Multiple handlers may exist.
             Set<Handler> hs = this.handlers.get(handleableId);
             hs.forEach((handler) -> handler.handle(handleable));
 
-            // Mark handling is complete.
+            // Mark handleable as handled.
             handleable.markHandled();
         } else {
-            logger.log(Level.WARNING, handleable.getHandleableId() + ": Not handling this headable.");
+            log.warn(handleable.getHandleableId() + ": Handleable already handled. Skipping.");
         }
     }
 
+    /**
+     * Whether there exists a handler for the given handleable.
+     * @param handleable Handleable.
+     * @return Result.
+     */
     protected boolean containsHandlerFor(@NonNull Handleable handleable) {
         return this.handlers.containsKey(handleable.getHandleableId());
     }

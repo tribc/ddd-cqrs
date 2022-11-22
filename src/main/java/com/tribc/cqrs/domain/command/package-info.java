@@ -1,4 +1,4 @@
 /**
- * Commands that are send and handled by the domain.
+ * Commands.
  */
 package com.tribc.cqrs.domain.command;

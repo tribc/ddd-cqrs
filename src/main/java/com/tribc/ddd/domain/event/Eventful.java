@@ -1,26 +1,17 @@
-/*
- * Copyright (c) Triacle Biocomputing. All rights reserved.
- * All information contained herein is proprietary and confidential to Triacle
- * Biocomputing.  Any use, reproduction, or disclosure without the written
- * permission of Triacle Biocomputing is prohibited.
- */
-
 package com.tribc.ddd.domain.event;
 
 import java.util.Collection;
 import java.util.stream.Stream;
 
 /**
- * Marks that some entity may raise events.
- *
- * @author Andr&#233; Juffer, Triacle Biocomputing
+ * Marks an entity as being capable of raising events.
  */
 public interface Eventful {
+
     /**
      * Returns all raised events.
      *
-     * @return Domain events that have not been handled as of yet. May be empty.
-     * Never null. Must be modifiable to ensure that handlers can change event status.
+     * @return Events. May be empty, but is never null.
      */
     Collection<Event> getEvents();
 

@@ -7,12 +7,12 @@ import reactor.core.publisher.Mono;
 import java.util.Collection;
 
 /**
- * Matches Handleable to Handlers who reactively deal with them.
+ * Matches handleable to handlers who reactively handle them.
  */
 public interface ReactiveBus {
 
     /**
-     * Deals with or handles a single Handleable.
+     * Handles a single Handleable.
      *
      * @param handleable Handleable.
      */

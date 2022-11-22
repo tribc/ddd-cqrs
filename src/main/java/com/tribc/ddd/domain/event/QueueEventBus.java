@@ -19,7 +19,7 @@ public class QueueEventBus extends EventBus {
     /**
      * Adds all events produced by eventful to the queue.
      *
-     * @param eventful SOmething that may have events.
+     * @param eventful Something that may have raised events.
      */
     public void add(Eventful eventful) {
         Collection<Event> events = Events.selectUnhandled(eventful.getEvents());
@@ -43,7 +43,6 @@ public class QueueEventBus extends EventBus {
             Event event = this.events.pop();
             this.handle(event);
         }
-
     }
 
     /**
@@ -59,7 +58,7 @@ public class QueueEventBus extends EventBus {
     }
 
     /**
-     * Are there any events?
+     * Whether there are there events?
      *
      * @return Results.
      */

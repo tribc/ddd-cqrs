@@ -1,28 +1,18 @@
-/*
- * Copyright (c) Triacle Biocomputing. All rights reserved.
- * All information contained herein is proprietary and confidential to Triacle
- * Biocomputing.  Any use, reproduction, or disclosure without the written
- * permission of Triacle Biocomputing is prohibited.
- */
-
 package com.tribc.ddd.domain.event;
 
 import com.tribc.cqrs.domain.handleable.HandleableId;
 import com.tribc.ddd.domain.handler.MapBus;
+import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Collection;
 
 /**
- * Receives an event and matches event handlers to it that subsequently
- * deal with the event.
- *
- * @author Andr&#233; Juffer, Triacle Biocomputing.
+ * Receives an event and matches event handlers. Multiple handlers may be associated to an event.
  */
+@NoArgsConstructor
+@Slf4j
 public class EventBus extends MapBus {
-
-    public EventBus() {
-        super();
-    }
 
     /**
      * Matches event to event handler.
@@ -32,6 +22,7 @@ public class EventBus extends MapBus {
      */
     public void match(HandleableId eventId,
                       EventHandler<AbstractEvent> eventHandler) {
+        log.trace("match()");
         super.match(eventId, eventHandler);
     }
 
@@ -42,19 +33,21 @@ public class EventBus extends MapBus {
      * @param eventful An Eventful.
      */
     public void handle(Eventful eventful) {
+        log.trace("handle()");
         Collection<Event> events = Events.selectUnhandled(eventful.getEvents());
         events.forEach(this::handle);
         eventful.clearEvents();
     }
 
     /**
-     * Handle all events of an eventful asynchronously in a new thread. After the new
+     * Handle all events of an eventful in a new thread. After the new
      * thread has started, control is immediately returned to the calling client.
      *
      * @param eventful Eventful.
      * @see #handle(com.tribc.ddd.domain.event.Eventful
      */
     public void handleAsync(Eventful eventful) {
+        log.trace("handleAsync()");
         Runnable r = () -> this.handle(eventful);
         Thread t = new Thread(r);
         t.start();

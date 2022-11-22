@@ -1,47 +1,58 @@
-/*
- * Copyright (c) Triacle Biocomputing. All rights reserved.
- * All information contained herein is proprietary and confidential to Triacle
- * Biocomputing.  Any use, reproduction, or disclosure without the written
- * permission of Triacle Biocomputing is prohibited.
- */
-
 package com.tribc.cqrs.domain.handleable;
 
 import java.time.Instant;
 
 /**
- * Something that is capable of being handled or dealt with.
- *
- * @author Andr&#233; Juffer, Triacle Biocomputing
+ * Something that can be handled or dealt with.
  */
 public interface Handleable {
 
     /**
-     * Marks that this handleable is being dealt with right now.
+     * Marks this handleable as being handled right now.
      */
     void markOngoing();
 
     /**
-     * Is this handleable currently being dealt with?
+     * Whether this handleable is currently (now) being handled with.
      *
      * @return Result.
+     * @deprecated
+     * @see #isOngoing()
      */
+    @Deprecated
     boolean isNotOngoing();
 
     /**
-     * Marks that this handleable has been dealt with.
+     * Whether this handleable is being handled right now.
+     *
+     * @return Result.
+     */
+    boolean isOngoing();
+
+    /**
+     * Marks this handleable as handled.
      */
     void markHandled();
 
     /**
-     * Was this handleable already being dealt with?
+     * Whether this handleable was already handled.
      *
      * @return Result.
+     * @deprecated
+     * @see #isHandled()
      */
+    @Deprecated
     boolean isNotHandled();
 
     /**
-     * Returns timestamp this handleable was dealt with.
+     * Whether this handleable was already handled.
+     * @return Result.
+     */
+    boolean isHandled();
+
+    /**
+     * Returns timestamp this handleable was handled. If this handleable was not yet handled,
+     * returns Instant.ofEpochMilli(0).
      *
      * @return Timestamp.
      */

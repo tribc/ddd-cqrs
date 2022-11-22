@@ -4,12 +4,13 @@ import com.tribc.cqrs.domain.handleable.Handleable;
 import reactor.core.publisher.Mono;
 
 /**
- * Handles reactively handleable.
+ * Handles a handleable in a reactive manner.
  */
 public interface ReactiveHandler {
 
     /**
-     * Handles the handleable.
+     * Handles a handleable.
+     *
      * @param handleable Handleable.
      * @param <T> Handleable type.
      * @return Handled handleable.

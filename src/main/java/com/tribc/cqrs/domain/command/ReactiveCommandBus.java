@@ -3,11 +3,15 @@ package com.tribc.cqrs.domain.command;
 import com.tribc.cqrs.domain.handleable.Handleable;
 import com.tribc.ddd.domain.handler.ReactiveMapBus;
 import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
 /**
- * Simple reactive command bus.
+ * Receives a command and matches it to a command handler that handles it
+ * in a reactive manner. Only a single handler can be matched
+ * to a command.
  */
+@Slf4j
 public class ReactiveCommandBus extends ReactiveMapBus {
 
     /**
@@ -17,9 +21,10 @@ public class ReactiveCommandBus extends ReactiveMapBus {
      * @return Handled command
      */
     public <T extends Handleable> Mono<T> handleReactively(@NonNull T command) {
+        log.trace("handleReactively()");
         return Mono.just(command)
+                .log()
                 .flatMap(this::manage)
-                .map(c -> command)
-                .log();
+                .map(h -> command);
     }
 }
